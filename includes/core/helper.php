@@ -14,6 +14,32 @@ class Helper extends Plugin {
 
 
     /**
+	 * Detect if this is a development site running on a private/loopback IP
+	 *
+	 * @return bool
+	 */
+	public static function is_localhost() {
+        
+        $loopbacks = array( '127.0.0.1', '::1' );
+        
+        if ( in_array( $_SERVER['REMOTE_ADDR'], $loopbacks ) ) {
+
+            return true;
+            
+		}
+
+		if ( ! filter_var( $_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE ) ) {
+
+            return true;
+            
+		}
+
+        return false;
+
+	}
+
+
+    /**
      * Write to WP Error Log
      *
      * @since       1.5.0

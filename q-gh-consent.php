@@ -2,6 +2,7 @@
 
 /**
  * Build a shared consent, privacy and cookie system
+ * https://docs.google.com/document/d/1GJ4BEg0jEbc4BAsj1spYAV0_GGU_41as_vQyv4RtIxw/edit?ts=5bd218cf
  *
  * @package   Q_GH_Consent
  * @author    Q Studio <social@qstudio.us>

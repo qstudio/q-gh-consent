@@ -168,7 +168,7 @@ class Template extends Plugin {
 
 ?>
         <div class="settings">
-            Settings...
+            Settings UI...
         </div>
 <?php
 
@@ -188,18 +188,53 @@ class Template extends Plugin {
     {
 
         // if API request fails or timesout, display default message ##
-        $default = 'Sorry, we could not fetch the Privacy Policy right now, please view <a href="%s" target="_blank">Privacy Policy</a> or try again later.';
-
-        // try to fetch privacy content from API ##
-
-        // build link to replace content with settings in same modal ##
-        $settings = '<button class="btn settings"><a href="/#/modal/consent/settings/">Edit your Settings</a></button>';
-
-        // compile ##
-        $string = \sprintf(
+        $default =  \sprintf(
             'Sorry, we could not fetch the Privacy Policy right now, please view <a href="%s" target="_blank">Privacy Policy</a> or try again later.'
             , 'https://greenheart.org/privacy/'
         );
+
+        // try to fetch privacy content from API ##
+        // The API on greenheart.org is extended with a new "page" end-point to accept "privacy" parameter and uses get_page_by_path() from there ## 
+        // http://v2.wp-api.org/reference/pages/
+        // https://greenheart.org/api/v2/page/get/privacy
+
+        // use local when local ##
+        $url =
+            Helper::is_localhost() ?
+            'https://ghorg.qlocal.com/api/v2/page/get/privacy' : 
+            'https://greenheart.org/api/v2/page/get/privacy' ;
+
+        global $wp_version;
+        $args = array(
+            'timeout'     => 5,
+            'redirection' => 5,
+            'httpversion' => '1.0',
+            'user-agent'  => 'WordPress/' . $wp_version . '; ' . \home_url(),
+            'blocking'    => true,
+            'headers'     => array(),
+            'cookies'     => array(),
+            'body'        => null,
+            'compress'    => false,
+            'decompress'  => true,
+            'sslverify'   => Helper::is_localhost() ? false : true , // no SSL locally ##
+            'stream'      => false,
+            'filename'    => null
+        ); 
+
+        // login user via a GET request to API v2 ##
+        $response = \wp_remote_get( $url, $args ); // 
+
+        // helper::log( 'wp_remote_get said: ' );
+        Helper::log( $response );
+
+        // compile ##
+        $string = $response->content ? \wpautop( $response->content ) : $default ;
+
+        // build link to replace content with settings in same modal ##
+        $settings = '<button class="btn settings"><a href="/#/modal/consent/settings/">Edit your Settings</a></button><br />';
+
+        // add setting button to privacy content ##
+        $string = $settings.$string;
 
     }
 
