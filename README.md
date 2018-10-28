@@ -1,4 +1,4 @@
-# Global Branding Bar 
+# Consent System
 **Contributors:** qlstudio  
 **Tags:** custom plugin  
 **Requires at least:** 4.9  
