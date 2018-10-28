@@ -12,10 +12,10 @@ use Q_GH_Consent\Theme\Template as Template;
 class Plugin {
 
 	// Settings ##
-    static $version = '0.5.7';
+    static $version = '0.1.0';
     static $device; // current device handle ( 'desktop || handheld' ) ##
     protected static $debug = true;
-    static $name = 'q-gh-bb';
+    static $name = 'q-gh-consent';
 
     /**
      * Instatiate Class
@@ -80,7 +80,7 @@ class Plugin {
     {
 
         // set text-domain ##
-        $domain = 'q-gh-brand-bar';
+        $domain = 'q-gh-consent';
 
         // The "plugin_locale" filter is also used in load_plugin_textdomain()
         $locale = apply_filters( 'plugin_locale', get_locale(), $domain );

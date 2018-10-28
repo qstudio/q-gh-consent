@@ -33,8 +33,8 @@ use Q_GH_Consent\Theme\Template as Template;
 defined( 'ABSPATH' ) OR exit;
 
 // Define our constants ##
-( ! defined( 'QGHBB_PATH' ) ) && define( 'QGHBB_PATH', trailingslashit( plugin_dir_path( __FILE__ ) ) );
-( ! defined( 'QGHBB_URL' ) ) && define( 'QGHBB_URL', trailingslashit( plugin_dir_url( __FILE__ ) ) );
+( ! defined( 'Q_GH_CONSENT_PATH' ) ) && define( 'Q_GH_CONSENT_PATH', trailingslashit( plugin_dir_path( __FILE__ ) ) );
+( ! defined( 'Q_GH_CONSENT_URL' ) ) && define( 'Q_GH_CONSENT_URL', trailingslashit( plugin_dir_url( __FILE__ ) ) );
 
 /**
  * Load Dependencies
@@ -58,7 +58,7 @@ $autoload = array(
     #,   'cron/update_students'
 );
 foreach ( $autoload as $load ) {
-    if ( file_exists( QGHBB_PATH.'includes/'.$load.'.php' ) ) require_once( QGHBB_PATH.'includes/'.$load.'.php' );
+    if ( file_exists( Q_GH_CONSENT_PATH.'includes/'.$load.'.php' ) ) require_once( Q_GH_CONSENT_PATH.'includes/'.$load.'.php' );
 }
 
 /**
