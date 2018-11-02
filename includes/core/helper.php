@@ -1,14 +1,14 @@
 <?php
 
 // namespace ##
-namespace Q_GH_Consent\Core;
+namespace q\consent\core;
 
-use Q_GH_Consent\Core\Plugin as Plugin;
+use q\consent\core\plugin as plugin;
 
 /**
  * Helper Functions
  *
- * @package   Q_GH_Consent\Core
+ * @package   q_consent\Core
  */
 class Helper extends Plugin {
 

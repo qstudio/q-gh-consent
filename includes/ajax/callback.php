@@ -1,17 +1,23 @@
 <?php
 
 // namespace ##
-namespace Q_Meet_Our_Students\AJAX;
+namespace q\consent\ajax;
 
-use Q_Meet_Our_Students\Core\Plugin as Plugin;
-use Q_Meet_Our_Students\Theme\Template as Template;
+use q\consent\core\helper as helper;
+use q\consent\core\plugin as plugin;
+use q\consent\theme\template as template;
+use q\consent\core\cookie as cookie;
 
 /**
  * AJAX callbacks
  *
- * @package   Q_Meet_Our_Students
+ * @package   q\consent
  */
-class Callback extends Template {
+
+// load it up ##
+\q\consent\ajax\callback::run();
+
+class callback extends plugin {
 
 	/**
      * Construct
@@ -19,21 +25,20 @@ class Callback extends Template {
      * @since       0.2
      * @return      void
      */
-    public function __construct()
+    public static function run()
     {
 
-    	// AJAX callback methods ##
-        add_action( 'wp_ajax_save_student', array( $this, 'ajax_save_student' ) ); // ajax for logged in users
-        add_action( 'wp_ajax_nopriv_save_student', array( $this, 'ajax_save_student' ) ); // ajax for not logged in users
+    	// delete cookie ##
+        \add_action( 'wp_ajax_consent_reset', [ get_class(), 'reset' ] ); // ajax for logged in users
+        \add_action( 'wp_ajax_nopriv_consent_reset', [ get_class(), 'reset' ] ); // ajax for not logged in users
 
-        add_action( 'wp_ajax_update_form', array( $this, 'ajax_update_form' ) ); // ajax for logged in users
-        add_action( 'wp_ajax_nopriv_update_form', array( $this, 'ajax_update_form' ) ); // ajax for not logged in users
-
-        // clear cookies ##
-        add_action( 'wp_ajax_delete_cookie', array( $this, 'ajax_delete_cookie' ) ); // ajax for logged in users
-        add_action( 'wp_ajax_nopriv_delete_cookie', array( $this, 'ajax_delete_cookie' ) ); // ajax for not logged in users
+        // set cookie ##
+        \add_action( 'wp_ajax_consent_set', [ get_class(), 'set' ] ); // ajax for logged in users
+        \add_action( 'wp_ajax_nopriv_consent_set', [ get_class(), 'set' ] ); // ajax for not logged in users
 
     }
+
+
 
     /**
      * Delete stored cookie
@@ -41,20 +46,34 @@ class Callback extends Template {
      * @since       0.1
      * @return      Boolean
      */
-    public function ajax_delete_cookie()
+    public static function reset()
     {
 
-        // Check if a cookie has been set
-        if ( isset( $_COOKIE["q_mos_saved"] ) && $_COOKIE["q_mos_saved"] ) {
+        // Check if a cookie has been set##
+        if ( 
+            cookie::get()
+        ) {
 
-            unset( $_COOKIE['q_mos_saved'] );
-            setcookie( 'q_mos_saved', null, -1, '/' );
+            // log ##
+            // helper::log( 'Cookie found and emptied.' );
 
-            $return = 1;
+            unset( $_COOKIE[plugin::$slug] );
+            setcookie( plugin::$slug, null, -1, '/' );
+
+            $return = [
+                'status'    => true,
+                'message'   => 'Stored Consent preferences reset to default.'    
+            ];
 
         } else {
 
-            $return = 0;
+            // log ##
+            // helper::log( 'No cookie found, so no action taken...' );
+
+            $return = [
+                'status'    => false,
+                'message'   => 'No stored Consent settings found.'    
+            ];
 
         }
 
@@ -72,58 +91,72 @@ class Callback extends Template {
 
 
     /**
-     * Save student to cookie from button click
+     * Save $_POSTed data to user cookie
      *
      * @since       0.1
      * @return      Boolean
      */
-    public function ajax_save_student( $id = null )
+    public static function set()
     {
 
         // check nonce ##
-        check_ajax_referer( 'q_mos_nonce', 'nonce' );
+        \check_ajax_referer( 'q_consent', 'nonce' );
 
-        // let's see if the user ID was passed ##
-        if ( isset( $_POST['id'] ) && $_POST['id'] ) {
+        // sanity ##
+        if ( 
+            ! isset( $_POST['q_consent_marketing'] ) 
+            || ! isset( $_POST['q_consent_analytics'] )
+            // || ! is_array( $_POST['q_consent'] )    
+        ) {
 
-            // add post data to variables ##
-            $id = \Q::sanitize( $_POST['id'] );
-
-            // check for stored cookie ##
-            if ( $this->get_cookie() ) {
-
-                // save student ##
-                if ( true === $this->set_cookie( $id ) ) {
-
-                    // return the number of saved students + 1, as cookie needs reload ##
-                    #$return = count( $this->get_cookie() ) + 1;
-
-					// return the number of saved students ##
-                    $return = $this->count_cookie();
-
-                } else {
-
-                    // return the number of saved students ##
-                    $return = 0;
-
-                }
-
-                #pr( $this->get_cookie(), 'updated cookie..' );
-
-            } else {
-
-                // save student ##
-                $this->set_cookie( $id );
-
-                // return 1 ##
-                $return = 1;
-
-            }
-
-        } else {
+            helper::log( 'Error in data passed to AJAX' );
 
             // return 0 ##
             $return = 0;
+
+        } else {
+
+            // helper::log( $_POST );
+
+            // format array... ##
+            $array = [];
+            
+            // marketing ##
+            $array['marketing'] = $_POST['q_consent_marketing'] ? 1 : 0 ;
+
+            // analytics ##
+            $array['analytics'] = $_POST['q_consent_analytics'] ? 1 : 0 ;
+
+            // add active consent to array as this has come from an user action ##
+            $array['consent'] = 1;
+
+            // check ##
+            // helper::log( $array );
+
+            // check for stored cookie -if found, update ##
+            if ( cookie::set( $array ) ) {
+
+                // log ##
+                // helper::log( 'AJAX saved cookie data' );
+
+                // positive outcome ##
+                $return = [
+                    'status'    => true,
+                    'message'   => 'Consent preferences saved, thank you.'    
+                ];
+
+            } else {
+
+                // log ##
+                // helper::log( 'AJAX failed to save cookie data' );
+
+                // negative outcome ##
+                $return = [
+                    'status'    => false,
+                    'message'   => 'Problem saving Consent preferences, please try again.'    
+                ];
+
+            }
 
         }
 
@@ -131,90 +164,12 @@ class Callback extends Template {
         header("Content-type: application/json");
 
         // return it ##
-        echo json_encode($return);
-
-        // all AJAX calls must die!! ##
-        die();
-
-    }
-
-
-    /**
-     * Method to update stored values in Gravity Form
-     * Grabs all students stored in cookie and present as radio buttons in the form
-     *
-     * @since       0.1
-     * @return      Mixed   Boolean on empty cookie OR Array of student names
-     */
-    public function ajax_update_form()
-    {
-
-        // check nonce ##
-        check_ajax_referer( 'q_mos_nonce', 'nonce' );
-
-        // check for stored cookie ##
-        if ( $cookie = $this->get_cookie() ) {
-
-			#wp_die( pr( $cookie, 'Cookie' ) );
-
-            $return = array();
-
-            foreach( $cookie as $student ) {
-
-                #pr( $student );
-
-                // student gender ##
-                #$gender = get_field( 'mos_gender', intval( $student ) );
-                $gender = wp_get_post_terms( intval( $student ), 'mos_gender' ); // this is a taxonomy - first item returned ##
-                $src_gender = $gender ? $gender[0] : false;
-                $src_gender = $src_gender->name == 'Male' ? 'male' : 'female' ;
-                #pr( $src_gender );
-                $src_gender = q_locate_template( "images/students/profile-{$src_gender}.png", false );
-
-
-                // get the student flag ##
-                #$country = get_field( 'mos_country', intval( $student ) );
-                $country = wp_get_post_terms( intval( $student ), 'mos_country' ); // this is a taxonomy - returns a single term - slug = two letter code "en", name = "England" ##
-                $country = $country ? $country[0] : false;
-
-                $src_country = get_field( 'country_shortcode', $country ) ? strtolower( get_field( 'country_shortcode', $country ) ) : 'en' ;
-                $src_country =
-                    q_locate_template( "images/students/flag-{$src_country}.png", false ) ?
-                    q_locate_template( "images/students/flag-{$src_country}.png", false ) :
-                    q_locate_template( "images/students/flag-en.png", false ) ; // backup to EN flag for now ##
-
-                $return[] = array(
-                        'name'      => get_the_title( intval( $student ) )
-                    ,   'unique_id' => get_post_meta( intval( $student ), 'mos_unique_id', true )
-                    ,   'country'   => $src_country
-                    ,   'gender'    => $src_gender
-                );
-
-            }
-
-            // we need to return a string ##
-            #$cookie = implode( ',', $cookie );
-            #pr( $return );
-
-            // return the number of saved students ##
-            #$return = $cookie;
-
-        } else {
-
-            // return 0 ##
-            $return = false;
-
-        }
-
-        // set headers ##
-        header( "Content-type: application/json" );
-
-        // return it ##
         echo json_encode( $return );
 
         // all AJAX calls must die!! ##
         die();
 
     }
+
 
 }

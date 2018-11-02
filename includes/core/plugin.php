@@ -1,21 +1,31 @@
 <?php
 
-namespace Q_GH_Consent\Core;
+namespace q\consent\core;
 
-use Q_GH_Consent\Core\Helper as Helper;
-use Q_GH_Consent\Theme\Template as Template;
+use q\consent\core\helper as helper;
+use q\consent\theme\template as template;
 
 /**
  * Class Plugin
- * @package Q_GH_Consent\Core
+ * @package q\consent\plugin
  */
-class Plugin {
+
+class plugin {
 
 	// Settings ##
-    static $version = '0.1.0';
+    static $version = '0.2.0';
     static $device; // current device handle ( 'desktop || handheld' ) ##
     protected static $debug = true;
-    static $name = 'q-gh-consent';
+    static $slug = 'q-consent';
+    
+    // default cookie values ##
+    static $defaults = [
+        'consent'       => 0, // tracking consent action ##
+        'marketing'     => 1, // marketing permitted ##
+        'analytics'     => 1, // analytics permitted ##
+    ];
+
+    static $cookie = false;
 
     /**
      * Instatiate Class
@@ -25,9 +35,6 @@ class Plugin {
      */
     public function __construct()
     {
-
-    	// crank up cron ##
-    	#$this->cron = new Cron();
 
     }
 
@@ -43,13 +50,7 @@ class Plugin {
     {
 
         // set text domain ##
-        add_action( 'init', array( $this, 'load_plugin_textdomain' ), 1 );
-
-        // front-end templates, styles and scripts ##
-    	new Template();
-
-        // AJAX callback methods ##
-        #new Callback();
+        \add_action( 'init', array( $this, 'load_plugin_textdomain' ), 1 );
 
     }
 
@@ -80,16 +81,16 @@ class Plugin {
     {
 
         // set text-domain ##
-        $domain = 'q-gh-consent';
+        $domain = 'q-consent';
 
         // The "plugin_locale" filter is also used in load_plugin_textdomain()
-        $locale = apply_filters( 'plugin_locale', get_locale(), $domain );
+        $locale = \apply_filters( 'plugin_locale', \get_locale(), $domain );
 
         // try from global WP location first ##
-        load_textdomain( $domain, WP_LANG_DIR.'/plugins/'.$domain.'-'.$locale.'.mo' );
+        \load_textdomain( $domain, WP_LANG_DIR.'/plugins/'.$domain.'-'.$locale.'.mo' );
 
         // try from plugin last ##
-        load_plugin_textdomain( $domain, FALSE, plugin_dir_path( __FILE__ ).'languages/' );
+        \load_plugin_textdomain( $domain, FALSE, \plugin_dir_path( __FILE__ ).'languages/' );
 
     }
 

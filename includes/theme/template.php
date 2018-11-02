@@ -1,17 +1,22 @@
 <?php
 
 // namespace ##
-namespace Q_GH_Consent\Theme;
+namespace q\consent\theme;
 
-use Q_GH_Consent\Core\Plugin as Plugin;
-use Q_GH_Consent\Core\Helper as Helper;
+use q\consent\core\plugin as plugin;
+use q\consent\core\helper as helper;
+use q\consent\core\api as api;
+use q\consent\core\cookie as cookie;
 
 /**
  * Template level UI changes
  *
- * @package   Q_GH_Consent
+ * @package   q_consent
  */
-class Template extends Plugin {
+// load it up ##
+\q\consent\theme\template::run();
+
+class template extends plugin {
 
 	/**
      * Instatiate Class
@@ -19,17 +24,25 @@ class Template extends Plugin {
      * @since       0.2
      * @return      void
      */
-    public function __construct()
+    public static function run()
     {
 
+        // check if the feature has been activated in the admin ##
+        if ( ! \get_option( plugin::$slug )['consent'] ) {
+            
+            // log ##
+            helper::log( 'Consent UI not active' );
+
+            // kick out ##
+            return false;
+
+        }
+
     	// styles and scripts ##
-        add_action( 'wp_enqueue_scripts', array( $this, 'wp_enqueue_scripts' ), 1 );
+        \add_action( 'wp_enqueue_scripts', [ get_class(), 'wp_enqueue_scripts' ], 1 );
 
-        // add body class identfier ##
-        // add_filter( 'body_class', array( $this, 'body_class' ), 1, 1 );
-
-        // add in brand bar ##
-        add_action( 'q_action_body_open', array ( $this, 'render' ), 3 );
+        // render consent bar markup - after brand bar at 3 ##
+        \add_action( 'q_action_body_open', [ get_class(), 'render' ], 4 );
 
     }
 
@@ -40,104 +53,99 @@ class Template extends Plugin {
      * @since       0.1
      * @return      void
      */
-    public function wp_enqueue_scripts()
+    public static function wp_enqueue_scripts()
     {
 
-        // only add these scripts on the correct page template ##
-        #if ( ! is_page_template( 'template-meet-our-students.php' ) ) { return false; }
-
         // Register the script ##
-        #wp_register_script( 'multiselect-js', Q_GH_CONSENT_URL.'javascript/jquery.multiselect.js', array( 'jquery' ), $this->version, true );
-        #wp_enqueue_script( 'multiselect-js' );
+        \wp_register_script( 'q-consent-js', Q_CONSENT_URL.'javascript/q-consent.js', array( 'jquery' ), plugin::$version, true );
 
-        // Register the script ##
-        \wp_register_script( 'q-gh-consent-js', Q_GH_CONSENT_URL.'javascript/q-gh-consent.js', array( 'jquery' ), Plugin::$version, true );
-
-        // // Now we can localize the script with our data.
-        // $translation_array = array(
-        //         'ajax_nonce'    => wp_create_nonce( 'q_mos_nonce' )
-        //     ,   'ajax_url'      => get_home_url( '', 'wp-admin/admin-ajax.php' )
-        //     ,   'saved'         => __( "Saved!", 'q-gh-consent' )
-		// 	,   'input_saved'   => __( "Saved", 'q-gh-consent' )
-		// 	,   'input_max'		=> __( "Maximum Saved", 'q-gh-consent' ) // text to indicate that max number of students reached ##
-        //     ,   'student'       => __( "Student saved", 'q-gh-consent' )
-        //     ,   'students'      => __( "Students saved", 'q-gh-consent' )
-        //     ,   'error'         => __( "Error", 'q-gh-consent' )
-		// 	,   'count_cookie'  => $this->count_cookie() // send cookie count to JS ##
-		// 	,   'max_students'  => $this->max_students // max number of students that can be saved ##
-        //     ,   'form_id'       => $this->form_id // Gravity Forms ID ##
-        // );
-        // wp_localize_script( 'q-gh-consent-js', 'q_mos', $translation_array );
+        // Now we can localize the script with our data.
+        $translation_array = array(
+                'ajax_nonce'    => wp_create_nonce( 'q_consent' )
+            ,   'ajax_url'      => get_home_url( '', 'wp-admin/admin-ajax.php' )
+            ,   'saved'         => __( "Saved!", 'q-consent' )
+            ,   'disabled'         => __( "Functional Cookies cannot be disabled", 'q-consent' )
+        );
+        wp_localize_script( 'q-consent-js', 'q_consent', $translation_array );
 
         // enqueue the script ##
-        \wp_enqueue_script( 'q-gh-consent-js' );
+        \wp_enqueue_script( 'q-consent-js' );
 
-        // @todo - this needs to be removed from the BB plugin and moved into Q when it is hosted on github ##
-        // wp_register_style( 'q-gh-main-css', Q_GH_CONSENT_URL.'scss/index.css', '', Plugin::$version);
-        // wp_enqueue_style( 'q-gh-main-css' );
-
-        // wp_register_style('google-fonts', '//fonts.googleapis.com/css?family=Open+Sans:400,700|Lato:400,700');
-        // wp_enqueue_style( 'google-fonts' );
+        // @todo - add styles ##
+        // wp_register_style( 'q-consent-css', Q_CONSENT_URL.'scss/index.css', '', Plugin::$version );
+        // wp_enqueue_style( 'q-consent-css' );
 
     }
 
-
-    /*
-    Add body class to allow each install to be identified uniquely
-
-    @since      0.2
-    @return     Array      array of classes passed to method, with any additions
-    */
-    public function body_class( $classes )
-    {
-
-        // let's grab and prepare our site URL ##
-        $identifier = strtolower( get_bloginfo( 'name' ) );
-
-        // add our class ##
-        $classes[] = 'install-'.str_replace( array( '.', ' '), '-', $identifier );
-
-        // return to filter ##
-        return $classes;
-
-    }
 
 
 	/**
-     * Render Brand Bar - called from widget added to theme template
+     * Render Consent UI
      *
-     * @since       0.1
+     * @since       0.1.0
      * @return      HTML
      */
     public static function render()
     {
 
-        // @todo viktor - later, this needs to be set-up differently ##
-        // render() should call a method for each UI featuer being rendered and they should have checks internally if the features are active ##
-        if ( ! \get_option( Plugin::$name)['consent'] ) {
-            
-            // log ##
-            Helper::log( 'Consent UI not active' );
+        // @todo - Viktor - this is basic css to make the prototype work, this needs to be improved and moved into external asset css file ##
+        self::css();
 
-            // kick out ##
+        // render consent bar ##
+        self::bar();
+
+        // add modal content ##
+        self::modal();
+
+    }
+
+
+
+    public static function bar()
+    {
+
+        // check if the user has already given active consent - if not, we continue to push them to take an action ##
+        if ( cookie::consent() ) {
+
             return false;
 
         }
 
 ?>
-        <div class="q-bb q-bb-promo q-bsg">
+        <div class="q-consent-bar q-bsg">
             <i class="cross d-none d-md-block"></i>
 
             <div class="row">
                 
-                <div class="content col-8 col-md-6">
-                    Generic short text about GDPR, Consent and <a href="/#/modal/consent/privacy/">Privacy Policy</a>
+                <div class="content col-8 col-md-8">
+                    Generic short text about GDPR, Consent and <a 
+                        href="<?php echo \get_permalink(); ?>#/modal/consent/tab/privacy/" 
+                        class="modal-trigger"
+                        data-tab-trigger="privacy">
+                        Privacy Policy
+                    </a>
                 </div>
                 
-                <div class="col-2 cta d-block d-md-none"><button class="btn settings"><a href="/#/modal/consent/settings/">SETTINGS</a></button></div>
+                <div class="col-2 cta d-block">
+                    <button class="btn">
+                        <a 
+                            href="<?php echo \get_permalink(); ?>#/modal/consent/tab/settings/" 
+                            class="modal-trigger"
+                            data-tab-trigger="settings">
+                            SETTINGS
+                        </a>
+                    </button>
+                </div>
                 
-                <div class="col-2 cta d-block d-md-none"><button class="btn accept">ACCEPT</button></div>
-
+                <div class="col-2 cta d-block">
+                    <button 
+                        class="btn accept q-consent-set"
+                        data-q-consent-marketing="1"
+                        data-q-consent-analytics="1">
+                        ACCEPT
+                    </button>
+                </div>
+                
             </div>
         </div>
 <?php
@@ -149,9 +157,28 @@ class Template extends Plugin {
     public static function modal()
     {
 
-        // @todo - check if site already has modal markup rendered ##
-        
-        // if modal markup missing, add required placeholder markup ## 
+?>
+        <div class="q-tab hidden modal-data" data-modal-key="consent">
+
+            <div class="q-tab-triggers">
+                <a href="<?php echo \get_permalink(); ?>#/modal/consent/tab/settings" class="q-tab-trigger" data-tab-trigger="settings">Settings</a>
+                <a href="<?php echo \get_permalink(); ?>#/modal/consent/tab/privacy" class="q-tab-trigger" data-tab-trigger="privacy">Privacy</a>
+            </div>
+
+            <div class="tab-targets">
+<?php
+
+                // load up settings tab ##
+                self::settings();
+            
+                // load up privacy tab ##
+                self::privacy();
+
+?>
+            </div>
+
+        </div>
+<?php
 
     }
 
@@ -167,8 +194,82 @@ class Template extends Plugin {
     {
 
 ?>
-        <div class="settings">
-            Settings UI...
+        <div class="q-tab-target col-12 col-md-12" data-tab-target="settings">
+            
+            <div class="row">
+                <h2>Consent Settings</h2>
+                <p>blah blah blah..</p>
+
+                <div class="options">
+
+                    <div class="row">
+                        <div class="description col-10 col-md-10">
+                            <h5>Functional Cookies</h5>
+                            <p>Text about this settings...</p>
+                        </div>
+                        <div class="col-1 col-md-1">
+                            <?php echo self::option([
+                                'field'     => 'functional',
+                                'value'     => 1, // no opt-out
+                                'disabled'  => true
+                            ]); ?>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="description col-10 col-md-10">
+                            <h5>Marketing Cookies</h5>
+                            <p>Text about this settings...</p>
+                        </div>
+                        <div class="col-1 col-md-1">
+                            <?php echo self::option([
+                                'field'     => 'marketing',
+                                'value'     => self::$cookie['marketing'],
+                                'disabled'  => false
+                            ]); ?>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="description col-10 col-md-10">
+                            <h5>Analytical Cookies</h5>
+                            <p>Text about this settings...</p>
+                        </div>
+                        <div class="col-1 col-md-1">
+                            <?php echo self::option([
+                                'field'     => 'analytics',
+                                'value'     => self::$cookie['analytics'],
+                                'disabled'  => false
+                            ]); ?>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="row">
+                
+                <div class="col-2 cta d-block d-md-none">
+                    <button 
+                        class="btn accept q-consent-set"
+                        data-q-consent-marketing="<?php echo self::$cookie['marketing']; ?>" 
+                        data-q-consent-analytics="<?php echo self::$cookie['analytics']; ?>"
+                        disabled
+                    >
+                        SAVE
+                    </button>
+                </div>
+
+                <div class="col-2 cta d-block d-md-none">
+                    <button 
+                        class="btn reset q-consent-reset">
+                        RESET
+                    </button>
+                </div>
+
+            </div>
+
         </div>
 <?php
 
@@ -178,7 +279,7 @@ class Template extends Plugin {
 
     /**
      * Render Privacy Policy content
-     * Tried to get privacy Policy via API on greenheart.org
+     * Tries to get privacy Policy via API on greenheart.org
      * Adds a link to open the settings
      * 
      * @todo    make sure privacy policy exists
@@ -187,55 +288,108 @@ class Template extends Plugin {
     public static function privacy()
     {
 
-        // if API request fails or timesout, display default message ##
-        $default =  \sprintf(
-            'Sorry, we could not fetch the Privacy Policy right now, please view <a href="%s" target="_blank">Privacy Policy</a> or try again later.'
-            , 'https://greenheart.org/privacy/'
-        );
-
-        // try to fetch privacy content from API ##
-        // The API on greenheart.org is extended with a new "page" end-point to accept "privacy" parameter and uses get_page_by_path() from there ## 
-        // http://v2.wp-api.org/reference/pages/
-        // https://greenheart.org/api/v2/page/get/privacy
-
-        // use local when local ##
-        $url =
-            Helper::is_localhost() ?
-            'https://ghorg.qlocal.com/api/v2/page/get/privacy' : 
-            'https://greenheart.org/api/v2/page/get/privacy' ;
-
-        global $wp_version;
-        $args = array(
-            'timeout'     => 5,
-            'redirection' => 5,
-            'httpversion' => '1.0',
-            'user-agent'  => 'WordPress/' . $wp_version . '; ' . \home_url(),
-            'blocking'    => true,
-            'headers'     => array(),
-            'cookies'     => array(),
-            'body'        => null,
-            'compress'    => false,
-            'decompress'  => true,
-            'sslverify'   => Helper::is_localhost() ? false : true , // no SSL locally ##
-            'stream'      => false,
-            'filename'    => null
-        ); 
-
-        // login user via a GET request to API v2 ##
-        $response = \wp_remote_get( $url, $args ); // 
-
-        // helper::log( 'wp_remote_get said: ' );
-        Helper::log( $response );
-
-        // compile ##
-        $string = $response->content ? \wpautop( $response->content ) : $default ;
-
-        // build link to replace content with settings in same modal ##
-        $settings = '<button class="btn settings"><a href="/#/modal/consent/settings/">Edit your Settings</a></button><br />';
-
-        // add setting button to privacy content ##
-        $string = $settings.$string;
+?>
+        <div class="q-tab-target" data-tab-target="privacy">
+            <?php echo api::privacy(); ?>
+        </div>
+<?php
 
     }
+
+
+
+    public static function option( $args = null )
+    {
+
+        // return false;
+
+        // sanity check ##
+        if ( is_null( $args ) ) {
+
+            helper::log( 'Error in passed args' );
+
+            return false;
+
+        }
+
+        // array map of options ##
+        $array = [
+            'off'   => [
+                'value'     => '0',
+                'disabled'  => $args['disabled'] ? 'disabled' : '',
+                'class'    => ( '0' == $args['value'] ) ? 'off' : null
+            ],
+            'on'    => [
+                'value'     => '1',
+                'disabled'  => $args['disabled'] ? 'disabled' : '',
+                'class'    => ( '1' == $args['value'] ) ? 'on' : null
+            ]
+        ];
+
+?>
+        <div 
+            class="q-consent-option"
+            data-q-consent-field="<?php echo $args["field"]; ?>"
+        >
+<?php
+
+        // loop out the same element twice, giving different classes ##
+        foreach( $array as $key ) {
+
+
+?>
+            <div 
+                class="slide <?php echo $key['class']; ?> <?php echo $key['disabled']; ?>" 
+                data-q-consent-value="<?php echo $key['value']; ?>">
+            </div>
+<?php
+
+        // loop ##
+        }
+
+?>
+        </div>
+<?php
+
+    }
+
+
+    /**
+     * @Viktor to move to asset / front-end framework 
+     * 
+     */
+    public static function css()
+    {
+
+?>
+        <style>
+            
+        /* generic */
+        .q-hidden { display: none; }
+
+        /* tabs */
+        .q-tab {  }
+
+        /* tab triggers */
+        .tab-trigger { display: inline; }
+        .tab-trigger.active { font-weight: bold; }
+
+        /* tab targets */
+        .tab-target { display: none; }
+        .tab-target.active { display: block; }
+
+        /* options */
+        .q-consent-option{ background-color: #f2f2f2; width: 60px; height: 30px; border: 1px solid #ddd; }
+        .q-consent-option > .slide { width: 50%; height: 28px; float: left; cursor: pointer; }
+        .q-consent-option > .off { background-color: red; }
+        .q-consent-option > .on { background-color: green; float: right; }
+        .q-consent-option > .disabled { cursor: not-allowed; }
+
+        </style>
+<?php
+
+    }
+
+
 
 }

@@ -6,7 +6,7 @@
  * @link       https://spinpress.com
  * @since      0.0.2
  *
- * @package    Q_Meet_Our_Students
+ * @package    Q_Consent
  */
 
 // If uninstall not called from WordPress, then exit.

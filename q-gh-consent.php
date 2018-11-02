@@ -4,7 +4,7 @@
  * Build a shared consent, privacy and cookie system
  * https://docs.google.com/document/d/1GJ4BEg0jEbc4BAsj1spYAV0_GGU_41as_vQyv4RtIxw/edit?ts=5bd218cf
  *
- * @package   Q_GH_Consent
+ * @package   q_consent
  * @author    Q Studio <social@qstudio.us>
  * @license   GPL-2.0+
  * @link      http://qstudio.us/
@@ -14,28 +14,29 @@
  * Plugin Name:     Consent
  * Plugin URI:      http://qstudio.us/
  * Description:     Build a shared consent, privacy and cookie system
- * Version:         0.1.0
+ * Version:         0.2.0
  * Author:          Q Studio
  * Author URI:      http://qstudio.us
  * License:         GPL2
- * Class:           Q_GH_Consent
- * Text Domain:     q-gh-consent
+ * Class:           q_consent
+ * Text Domain:     q-consent
  * Domain Path:     languages/
  * GitHub Plugin URI: qstudio/q-gh-consent
  */
 
-namespace Q_GH_Consent;
+namespace q\consent; 
 
-use Q_GH_Consent\Admin\Menu;
-use Q_GH_Consent\Core\Plugin as Plugin;
-use Q_GH_Consent\Theme\Template as Template;
+use q\consent\admin\menu;
+use q\consent\core\plugin as plugin;
+use q\consent\core\cookie as cookie;
+use q\consent\theme\template as template;
 
 // stop direct access ##
 defined( 'ABSPATH' ) OR exit;
 
 // Define our constants ##
-( ! defined( 'Q_GH_CONSENT_PATH' ) ) && define( 'Q_GH_CONSENT_PATH', trailingslashit( plugin_dir_path( __FILE__ ) ) );
-( ! defined( 'Q_GH_CONSENT_URL' ) ) && define( 'Q_GH_CONSENT_URL', trailingslashit( plugin_dir_url( __FILE__ ) ) );
+( ! defined( 'Q_CONSENT_PATH' ) ) && define( 'Q_CONSENT_PATH', trailingslashit( plugin_dir_path( __FILE__ ) ) );
+( ! defined( 'Q_CONSENT_URL' ) ) && define( 'Q_CONSENT_URL', trailingslashit( plugin_dir_url( __FILE__ ) ) );
 
 /**
  * Load Dependencies
@@ -45,21 +46,14 @@ defined( 'ABSPATH' ) OR exit;
 $autoload = array(
         'core/plugin'
     ,   'core/helper'
+    ,   'core/api'
+    ,   'core/cookie'
     ,   'admin/menu'
-    #,   'type/taxonomy'
-    #,   'type/post-type'
     ,   'theme/template'
-    #,   'plugin/gravity-forms'
-    #,   'plugin/q-search'
-    #,   'admin/ui'
-    #,   'widget/brand-bar'
-    #,   'ajax/callback'
-    #,   'cron/schedule'
-    #,   'cron/fetch_students'
-    #,   'cron/update_students'
+    ,   'ajax/callback'
 );
 foreach ( $autoload as $load ) {
-    if ( file_exists( Q_GH_CONSENT_PATH.'includes/'.$load.'.php' ) ) require_once( Q_GH_CONSENT_PATH.'includes/'.$load.'.php' );
+    if ( file_exists( Q_CONSENT_PATH.'includes/'.$load.'.php' ) ) require_once( Q_CONSENT_PATH.'includes/'.$load.'.php' );
 }
 
 /**
@@ -69,7 +63,7 @@ foreach ( $autoload as $load ) {
 register_activation_hook( __FILE__, __NAMESPACE__.'\\activation' );
 function activation() {
 
-    $instance = new Plugin();
+    $instance = new plugin();
     $instance->activate();
 
 }
@@ -77,7 +71,7 @@ function activation() {
 register_deactivation_hook( __FILE__, __NAMESPACE__.'\\deactivation' );
 function deactivation() {
 
-    $instance = new Plugin();
+    $instance = new plugin();
     $instance->deactivate();
 
 }
@@ -91,19 +85,9 @@ add_action( 'plugins_loaded', __NAMESPACE__.'\\hook', 5 );
 function hook() {
 
     // new class instance ##
-    $instance = new Plugin();
-    new Menu();
+    $instance = new plugin();
 
     // load theme hooks ##
     $instance->run_hooks();
-
-}
-
-/*
-API call to render brand bar
-*/
-function render() {
-
-    Template::render();
 
 }
