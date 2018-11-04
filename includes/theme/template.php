@@ -18,7 +18,7 @@ use q\consent\core\cookie as cookie;
 
 class template extends plugin {
 
-	/**
+    /**
      * Instatiate Class
      *
      * @since       0.2
@@ -38,7 +38,7 @@ class template extends plugin {
 
         }
 
-    	// styles and scripts ##
+        // styles and scripts ##
         \add_action( 'wp_enqueue_scripts', [ get_class(), 'wp_enqueue_scripts' ], 1 );
 
         // render consent bar markup - after brand bar at 3 ##
@@ -79,7 +79,7 @@ class template extends plugin {
 
 
 
-	/**
+    /**
      * Render Consent UI
      *
      * @since       0.1.0
@@ -118,12 +118,16 @@ class template extends plugin {
             <div class="row">
                 
                 <div class="content col-8 col-md-8">
-                    Generic short text about GDPR, Consent and <a 
-                        href="<?php echo \get_permalink(); ?>#/modal/consent/tab/privacy/" 
-                        class="modal-trigger"
-                        data-tab-trigger="privacy">
-                        Privacy Policy
-                    </a>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            This website uses cookies for basic functionality, analytics, and marketing. Visit our <a 
+                                href="<?php echo \get_permalink(); ?>#/modal/consent/tab/privacy/" 
+                                class="modal-trigger"
+                                data-tab-trigger="privacy">
+                                Privacy Policy
+                            </a> page to find out more.
+                        </div>
+                    </div>
                 </div>
                 
                 <div class="col-2 cta d-block">
@@ -195,59 +199,65 @@ class template extends plugin {
 
 ?>
         <div class="q-tab-target col-12 col-md-12" data-tab-target="settings">
-            
-            <div class="row">
-                <h2>Consent Settings</h2>
-                <p>blah blah blah..</p>
-
-                <div class="options">
-
+            <div class="panel panel-default">
+                <div class="panel-body">   
                     <div class="row">
-                        <div class="description col-10 col-md-10">
-                            <h5>Functional Cookies</h5>
-                            <p>Text about this settings...</p>
-                        </div>
-                        <div class="col-1 col-md-1">
-                            <?php echo self::option([
-                                'field'     => 'functional',
-                                'value'     => 1, // no opt-out
-                                'disabled'  => true
-                            ]); ?>
-                        </div>
-                    </div>
+                        <h2>Cookie Consent Settings</h2>
+                        <p>Greenheart uses cookies to let you interact with our services, and for marketing and advertising purposes. Some of these cookies are strictly necessary for our sites to function and by using this site you agree that you have read and understand our use of cookies. <br /><br />
+                        Our marketing and advertising cookies are non-essential and you can opt out of using them with this tool. Blocking cookies may impact your experience on our website.</p>
+                        <div class="options">
 
-                    <div class="row">
-                        <div class="description col-10 col-md-10">
-                            <h5>Marketing Cookies</h5>
-                            <p>Text about this settings...</p>
-                        </div>
-                        <div class="col-1 col-md-1">
-                            <?php echo self::option([
-                                'field'     => 'marketing',
-                                'value'     => self::$cookie['marketing'],
-                                'disabled'  => false
-                            ]); ?>
-                        </div>
-                    </div>
+                            <div class="row">
+                                <div class="description col-10 col-md-10">
+                                    <h5>Functional Cookies</h5>
+                                    <p>These cookies are necessary for our sites to function properly. These cookies secure our forms, support login sessions and remember user dialogue. Because the site does not function without these cookies, opt-out is not available. They are not used for marketing or analytics.</p>
+                                </div>
+                                <div class="col-1 col-md-1">
+                                    <?php echo self::option([
+                                        'field'     => 'functional',
+                                        'value'     => 1, // no opt-out
+                                        'disabled'  => true
+                                    ]); ?>
+                                </div>
+                            </div>
 
-                    <div class="row">
-                        <div class="description col-10 col-md-10">
-                            <h5>Analytical Cookies</h5>
-                            <p>Text about this settings...</p>
-                        </div>
-                        <div class="col-1 col-md-1">
-                            <?php echo self::option([
-                                'field'     => 'analytics',
-                                'value'     => self::$cookie['analytics'],
-                                'disabled'  => false
-                            ]); ?>
-                        </div>
-                    </div>
+                            <div class="row">
+                                <div class="description col-10 col-md-10">
+                                    <h5>Marketing Cookies</h5>
+                                    <p>These cookies are used to enhance the relevance of our advertising on social media and to tailor messages relevant to your interests.</p>
+                                </div>
+                                <div class="col-1 col-md-1">
+                                    <?php echo self::option([
+                                        'field'     => 'marketing',
+                                        'value'     => self::$cookie['marketing'],
+                                        'disabled'  => false
+                                    ]); ?>
+                                </div>
+                            </div>
 
+                            <div class="row">
+                                <div class="description col-10 col-md-10">
+                                    <h5>Analytical Cookies</h5>
+                                    <p>These cookies collect anonymous data on how visitors use our site and how our pages perform. We use this information to make the best site possible for our users.</p>
+                                </div>
+                                <div class="col-1 col-md-1">
+                                    <?php echo self::option([
+                                        'field'     => 'analytics',
+                                        'value'     => self::$cookie['analytics'],
+                                        'disabled'  => false
+                                    ]); ?>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="description col-10 col-md-10"> 
+                                    <p>Concerned about privacy? Read about <a href="https://www.pcmag.com/feature/359951/how-to-prevent-facebook-from-sharing-your-personal-data" target="_blank">how to stop Facebook from sharing your personal data</a> or click here to <a href="https://tools.google.com/dipage/gaoptout">opt out of Google Analytics tracking</a>, or visit our <a href="<?php echo \get_permalink(); ?>#/modal/consent/tab/privacy" class="q-tab-trigger" data-tab-trigger="privacy">Privacy Page</a> for more details.
+                                    </p>   
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
                 </div>
-
             </div>
-
             <div class="row">
                 
                 <div class="col-2 cta d-block d-md-none">
