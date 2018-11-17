@@ -58,7 +58,7 @@ if ( typeof jQuery !== 'undefined' ) {
 
 		// bootstrap-js hack - Bolts on the active class for bootstrap tabs - nothing else ##
         $( document.body ).on( "click", ".q-tab-trigger", function(e){
-        	e.preventDefault();
+        	//this doesn't work. the existing q-tabs JS writes over it. That global JS should be updated to accomodate Bootstrap tab styles
         	var t = this;
         	$('.q-tab-trigger').removeClass('active');
         	$(t).addClass('active');
