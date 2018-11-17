@@ -11,7 +11,7 @@ if ( typeof jQuery !== 'undefined' ) {
 		// setting options @viktor to improve UI and UX ##
 		$( document.body).on( "click", ".q-consent-option > div", function(e){
 
-			e.preventDefault();
+			//e.preventDefault();
 			var t = this;
 
 			// reject disabled option ##
@@ -55,6 +55,15 @@ if ( typeof jQuery !== 'undefined' ) {
 			// $( '.q-consent-set' ).data( 'q-consent-marketing', $value );
 
 		});
+
+		// bootstrap-js hack - Bolts on the active class for bootstrap tabs - nothing else ##
+        $( document.body ).on( "click", ".q-tab-trigger", function(e){
+        	e.preventDefault();
+        	var t = this;
+        	$('.q-tab-trigger').removeClass('active');
+        	$(t).addClass('active');
+
+        });
 
 		// save settings ##
         $( document.body ).on( "click", ".q-consent-set", function(e){
