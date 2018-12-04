@@ -75,6 +75,9 @@ class template extends plugin {
         // wp_register_style( 'q-consent-css', Q_CONSENT_URL.'scss/index.css', '', Plugin::$version );
         // wp_enqueue_style( 'q-consent-css' );
 
+        //TESTING ONLY! #HACK 
+        \wp_enqueue_style('bs_hack', Q_CONSENT_URL.'deletes/rootstrap.css', array(), '4.0', false );
+        #\wp_enqueue_style( 'bootstrap-css', 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css' );
     }
 
 
@@ -110,44 +113,7 @@ class template extends plugin {
             return false;
 
         }
-
 ?>
-
-
-        <!-- DEPRECATED GET RID OF SOON
-            
-            <div class="content col-10 col-md-8">
-                Generic short text about GDPR, Consent and <a href="https://greenheartorg.staging.wpengine.com/#/modal/consent/tab/privacy/" class="modal-trigger" data-tab-trigger="privacy">
-                    Privacy Policy
-                </a>
-            </div>
-            
-            <div class="col-2 col-md-4 cta float-right">
-              <div class="d-inline-block float-right">
-                  <a href="https://greenheartorg.staging.wpengine.com/#/modal/consent/tab/settings/" class="modal-trigger" data-tab-trigger="settings">
-                    <button type="button" class="btn btn-primary">
-                          SETTINGS
-                    </button>
-                  </a>
-              </div>
-              <div class="d-inline-block float-right">
-                  <button type="button" class="btn btn-primary accept q-consent-set" data-q-consent-marketing="1" data-q-consent-analytics="1">
-                      ACCEPT
-                  </button>
-              </div>
-                
-            </div>
-            
-        </div>
-    </div>
-</div>
-
-
--->
-
-
-
-
 <div class="bs4">
     <div class="q-consent-bar q-bsg card text-white">
         <i class="cross d-none d-md-block"></i>
@@ -156,9 +122,7 @@ class template extends plugin {
                 This website uses cookies for basic functionality, analytics, and marketing. Visit our <a 
                     href="<?php echo \get_permalink(); ?>#/modal/consent/tab/privacy/" 
                     class="modal-trigger"
-                    data-tab-trigger="privacy">
-                    Privacy Policy
-                </a> page to find out more.
+                    data-tab-trigger="privacy">Privacy Policy</a> page to find out more.
             </div>
             
             <div class="col-6 col-md-4 cta float-right">
@@ -190,13 +154,14 @@ class template extends plugin {
 ?>
         <div class="q-tab hidden modal-data" data-modal-key="consent">
 
-            <div class="q-tab-triggers btn-group">
-                <button type="button" class="btn btn-primary"><a href="<?php echo \get_permalink(); ?>#/modal/consent/tab/settings" class="q-tab-trigger" data-tab-trigger="settings">Settings</a></button>
-                <button type="button" class="btn btn-primary"><a href="<?php echo \get_permalink(); ?>#/modal/consent/tab/privacy" class="q-tab-trigger" data-tab-trigger="privacy">Privacy</a></button>
-                
-            </div>
+            <div class="q-bsg">
+                <ul class="q-tab-triggers nav nav-tabs" role="tablist">
+                    <li class="nav-item"><a href="<?php echo \get_permalink(); ?>#/modal/consent/tab/settings" class="q-tab-trigger nav-link active" data-tab-trigger="settings">Settings</a></li>
+                    <li class="nav-item"><a href="<?php echo \get_permalink(); ?>#/modal/consent/tab/privacy" class="q-tab-trigger nav-link" data-tab-trigger="privacy">Privacy</a></li>
+                    
+                </ul>
 
-            <div class="tab-targets">
+                <div class="tab-targets">
 <?php
 
                 // load up settings tab ##
@@ -206,6 +171,7 @@ class template extends plugin {
                 self::privacy();
 
 ?>
+                </div>
             </div>
 
         </div>
@@ -294,8 +260,6 @@ class template extends plugin {
                             </div>
                         </div>
                     </div> 
-                </div>
-            </div>
             <div class="row">
                 <div class="col-6 col-md-4 cta float-right">
                     <div class="d-inline-block float-right">
@@ -314,10 +278,13 @@ class template extends plugin {
                         <button type="button" class="btn reset q-consent-reset">
                             RESET
                         </button>
+
                     </div>
                 </div>
             </div>
         </div>
+
+            
 <?php
 
     }
@@ -414,6 +381,7 @@ class template extends plugin {
 ?>
         <style>
             
+
         /* generic */
         .q-hidden { display: none; }
 
@@ -436,6 +404,206 @@ class template extends plugin {
         .q-consent-option > .off { background-color: red; }
         .q-consent-option > .on { background-color: green; float: right; }
         .q-consent-option > .disabled { cursor: not-allowed; }
+
+/* Top Banner */
+body .bs4 .q-consent-bar.card {
+    background: #00A8DC; 
+    color: #fff;
+    border-radius: 0;
+    border: 0;
+    line-height:38px;   
+    /* background-color: #00a9e0; @TODO - Why is our Snackbar Azure color different than our Zeplin Styleguide...they are too similar to not match */
+    border-radius: 0;
+}
+            
+/* generic damn */
+.q-hidden { display: none; }
+
+/* tabs */
+
+
+/* tab triggers */
+.tab-trigger { display: inline; }
+.tab-trigger.active { font-weight: bold; }
+
+/* tab targets */
+.tab-target { display: none; }
+.tab-target.active { display: block; }
+
+body .q-tab-target .col-12.options {
+
+    padding-left: 0;
+    padding-right: 0;
+
+}
+body .q-tab-target .container, 
+body .q-tag-target .description {
+
+    padding-left: 0;
+    padding-right: 0;
+
+}
+.tab-targets {
+
+    margin-bottom: 40px;
+
+}
+
+
+body .bs4 .q-consent-bar.card a {
+    display: unset;
+    display: inline;
+    color: white;
+    text-decoration: underline !important;
+}
+.bs4.featherlight-inner a {
+    color: #8ac53f;
+}
+.bs4.featherlight-inner a:hover {
+    color: #7cb138;
+}
+.q-consent-bar .card-body,
+.q-consent-bar .card-body div,
+.q-consent-bar .card-body p {
+    color: white;
+    font-size: 11pt;
+    line-height:38px;   
+}
+
+
+
+/* Typography Reset */
+body .bs4 h1, body .bs4 h2,body .bs4 h3, body .bs4 h4, body .bs4 h5 {
+    font-family: "Sanchez", Georgia, serif;
+}
+body .bs4 h1, body .bs4 h2, body .bs4 h3 {
+font-weight: 300;
+}
+body .bs4 {
+    font-family: "Lato", Georgia, serif;
+}
+/* Button Reset */
+body .bs4 button.btn-primary {
+    margin: 0 10px;
+    background-color: #8ac53f;
+    border-color: #7cb138;
+}
+body .bs4 button.btn-primary:hover {
+    background-color: #7cb138;
+    border-color: #8ac53f;
+    box-shadow: none;
+}
+body .bs4 button.btn-primary:disabled {
+    background-color: #777;
+}
+
+/* Modal panel */
+body .featherlight-content .bs4 > .q-tab-triggers  {
+    margin-left: 0;
+    margin-bottom: 40px;
+}
+body .bs4 .q-consent-wrapper{
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    width: 100px;
+    height: 100px;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    padding-top: 6px;
+
+}
+
+body .bs4 [type="checkbox"]:not(:checked), body .bs4 [type="checkbox"]:checked, body .bs4 [type="radio"]:not(:checked), body .bs4 [type="radio"]:checked {
+    position: relative;
+    left: 0;
+}
+/* PLUGIN Toggle Switch Credit: */
+body .bs4 .q-consent-option > .q-switch-box:last-of-type {
+    opacity: 0;
+    height: 0px;
+    width: 0px;
+}
+body .bs4 .q-consent-option {
+    position: absolute;
+    right: 15px;
+}
+body .bs4 .q-consent-padding {
+    margin-bottom:30px;
+}
+body .bs4 span.toggle_legend {
+    float: right;
+    display: block;
+    text-align: right;
+    width: 100%;
+    opacity: .4;
+    font-size: 60%;
+    padding-right: 15px;
+}
+body .bs4 .q-switch_box {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    max-width: 50px;
+    min-width: 50px;
+    height: 50px;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
+}
+
+/* Switch 1 Specific Styles Start */
+
+body .bs4 .box_1{
+    background: transparent;
+}
+
+body .bs4 input[type="checkbox"].switch_1{
+    font-size: 15px;
+    -webkit-appearance: none;
+       -moz-appearance: none;
+            appearance: none;
+    width: 2em;
+    height: 1em;
+    background: #ddd;
+    border-radius: 2em;
+    position: relative;
+    cursor: pointer;
+    outline: none;
+    -webkit-transition: all .2s ease-in-out;
+    transition: all .2s ease-in-out;
+  }
+  
+body .bs4 input[type="checkbox"].switch_1:checked{
+    background: #8ac53f;
+  }
+  
+body .bs4 input[type="checkbox"].switch_1:after{
+    position: absolute;
+    content: "";
+    width: 1em;
+    height: 1em;
+    border-radius: 50%;
+    background: #fff;
+    -webkit-box-shadow: 0 0 .25em rgba(0,0,0,.3);
+            box-shadow: 0 0 .25em rgba(0,0,0,.3);
+    -webkit-transform: scale(.7);
+            transform: scale(.7);
+    left: 0;
+    -webkit-transition: all .2s ease-in-out;
+    transition: all .2s ease-in-out;
+  }
+  
+body .bs4 input[type="checkbox"].switch_1:checked:after{
+    left: calc(100% - 1em);
+  }
+
 
         /* following along with the hacks */
         .q-consent-bar.card {
