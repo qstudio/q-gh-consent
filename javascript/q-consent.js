@@ -8,19 +8,11 @@ if ( typeof jQuery !== 'undefined' ) {
 
     (function ($) {
 
-    	$(document).ready(function(){
+    	$( window ).on( "load", function(){
 
-    		$active_tab = q_active_tab();
-    		$tabs = $('.q-tab-trigger');
-    		$tabs.removeClass('active');
-    		$tabs.each(function(){
-    			$tab = '';
-    			$link_array = $(this).attr('href').split('/');
-    			while($tab === '') $tab = $link_array.pop(); //recursively pops through trailing /
-    			//console.log( $tab );
-    			if( $tab === $active_tab ) $(this).addClass( 'active' );
-    		})
-
+    	$tabs = $('.q-tab-trigger');
+    	//$tabs.removeClass('active');
+    	$('q-tab-current').addClass('active');
     	});//First modal page load
 
 		// setting options @viktor to improve UI and UX ##
@@ -74,7 +66,7 @@ if ( typeof jQuery !== 'undefined' ) {
 		// bootstrap-js hack - Bolts on the active class for bootstrap tabs - nothing else ##
         $( document.body ).on( "click", ".q-tab-trigger", function(e){
         	//this doesn't work. the existing q-tabs JS writes over it. That global JS should be updated to accomodate Bootstrap tab styles
-        	var t = this;
+        	var t = e.target;
         	$('.q-tab-trigger').removeClass('active');
         	$(t).addClass('active');
 
@@ -196,27 +188,7 @@ if ( typeof jQuery !== 'undefined' ) {
 			});
 
         });
-		    /* UTILITY FUNCTIONS
-    Check for passed hash value
-    */
-    function q_active_tab( tabname ){
 
-    	if(typeof( tabname ) === 'undefined') tabname = 'tab'
-        if ( window.location.href.toString().indexOf( tabname ) == -1 ) {
-
-            // console.log( 'No toggle...' );
-
-            return false;
-
-        }
-          // get new hash string ##
-        var active_tab = window.location.href.toString().substr( window.location.href.toString().indexOf( tabname ) + tabname.length + 1 );
-        active_tab = active_tab.split('/').join(''); //remove trailing slash
-        //console.log(active_tab);
-
-        return $active_tab;
-
-    };
 
     })(jQuery);
 

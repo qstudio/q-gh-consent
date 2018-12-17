@@ -114,8 +114,8 @@ class template extends plugin {
 
         }
 ?>
-<div class="bs4">
-    <div class="q-consent-bar q-bsg card text-white">
+<div class="q-bsg">
+    <div class="q-consent-bar card text-white">
         <i class="cross d-none d-md-block"></i>
         <div class="row card-body">
             <div class="content col-6 col-md-8 ">
@@ -251,16 +251,10 @@ class template extends plugin {
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="description col-10 col-md-10"> 
-                                        <p>Concerned about privacy? Read about <a href="https://www.pcmag.com/feature/359951/how-to-prevent-facebook-from-sharing-your-personal-data" target="_blank">how to stop Facebook from sharing your personal data</a> or click here to <a href="https://tools.google.com/dipage/gaoptout">opt out of Google Analytics tracking</a>, or visit our <a href="<?php echo \get_permalink(); ?>#/modal/consent/tab/privacy" class="q-tab-trigger" data-tab-trigger="privacy">Privacy Page</a> for more details.
-                                        </p>   
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div> 
-            <div class="row">
+            <div class="row d-block">
                 <div class="col-6 col-md-4 cta float-right">
                     <div class="d-inline-block float-right">
                         <a href="https://greenheartorg.staging.wpengine.com/#/modal/consent/tab/settings/" class="modal-trigger" data-tab-trigger="settings">
@@ -304,7 +298,45 @@ class template extends plugin {
 
 ?>
         <div class="q-tab-target" data-tab-target="privacy">
-            <?php echo api::privacy(); ?>
+            <!-- <?php echo api::privacy(); ?> TODO - Reinstate dynamic Privacy fetching -->
+
+
+
+<h3>Privacy Policy</h3>
+<p>Thank you for visiting our website. This privacy policy tells you how Greenheart Exchange Online uses personally identifying information (PII) collected at this site. Please read this privacy policy before using the site or submitting any personal information. By using the site, you are accepting the practices described in this privacy policy. These practices may be changed, but any changes will be posted and changes will only apply to activities and information on a going forward, not retroactive basis. You are encouraged to review the privacy policy whenever you visit the site to make sure that you understand how any personal information you provide will be used.</p>
+<p>Note that the privacy practices set forth in this privacy policy are for this website only. If you link to other websites, please review the privacy policies posted at those sites.</p>
+<p><strong>Collection of Personally Identifying Information</strong><br>
+PII includes names, postal addresses, email addresses, etc., when voluntarily submitted by our visitors. The information you provide is used to fulfill your specific request. This information is only used to fulfill your specific request, unless you give us permission to use it in another manner, for example to add you to one of our mailing lists. If you identify yourself to us by sending us an email with questions or comments. We may, at our sole discretion, either file your comments for future reference or discard the information after we have received it.</p>
+<p>We exercise great care in providing secure transmissions of your PII from your PC to our servers. Our secure server software encrypts information, ensuring that Internet transactions remain private (unless sent by an unsecured means such as email). Neither Greenheart Exchange nor any telephone network nor service providers we utilize are responsible for incorrect or inaccurate transcriptions of information or for any human error, technical malfunctions, lost-delayed data transmission, omission, interruption, deletion, defect, line failures or any telephone network, computer equipment, software, inability to access any website or on-line service or any other error or malfunction or misdirected entries.</p>
+<p><strong>Cookie/Tracking Technology</strong><br>
+The site may use cookie and tracking technology to collect non-personal identifying information depending on the features offered. Non-PII might include the browser you use, the type of computer operating system you use, the Internet service providers and other similar information. Our system also automatically gathers information about the areas you visit on our sites and about the links you may select from within our site to the other areas of the World Wide Web or elsewhere online. We use such information in the aggregate to understand how our users as a group use the services and resources provided on our site. This way we know which areas of our sites are favorites of our users, which areas need improvement and what technologies are being used so that we may continually improve our sites. Cookie and tracking technology are useful for gathering information such as identifying a website user’s browser type and operating system, tracking the number of visitors to the site, and understanding how visitors use the site. Cookies can also help customize the site for visitors. Personal information cannot be collected via cookies and other tracking technology, however, if you previously provided personally identifiable information, cookies may be tied to such information. Aggregate cookie and tracking information may be shared with third parties but that aggregate information does not identify individual website users. Our web servers do not record email addresses of the visitors unless information is submitted by users. We may determine what technology is available through your browser in order to provide you with the most appropriate version of a web page.</p>
+<p><strong>Distribution of Information</strong><br>
+We may share information gathered by us from our website with governmental agencies or other companies assisting us in fraud prevention or investigation. We may do so when: (1) permitted or required by law; or, (2) trying to protect against or prevent actual or potential fraud or unauthorized transactions; or, (3) investigating fraud which has already taken place. The information is not provided to these companies for marketing purposes.</p>
+<p>Third parties who provide hosting services or other day-to-day services that make possible the operation of this website may have access to information that you provide us to the extent those third parties require access to our databases to service the website.</p>
+<p>We reserve the right to transfer information we have secured from you in connection with the sale or transfer of all or part of our assets. We are not responsible for any breach of security or for any actions of any third parties that receive information from us.</p>
+<p>This website is operated in the United States of America. If you are located outside of the United States, please be aware that any information you provide will be transferred to the United States. By using this website, you consent to this transfer.</p>
+<p><strong>Commitment to Data Security</strong><br>
+Your personally identifiable information is kept secure. All emails and newsletters from this site allow you to opt out of further mailings.</p>
+<p><strong>Privacy Contact information</strong><br>
+If you have any questions, concerns, or comments about our privacy policy you may contact us using the information below:<br>
+By email: support@greenheart.org<br>
+By phone: 312-944-2544</p>
+<p>We reserve the right to make changes to this policy at any time and you should check this policy periodically for updates. Any changes to this policy will be posted here.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <!-- END PRIVACY POLICY HACK -->
         </div>
 <?php
 
@@ -357,6 +389,7 @@ class template extends plugin {
 
                 class="q-switch-box box_1 <?php echo $key['class']; ?> <?php echo $key['disabled']; ?>" 
                 data-q-consent-value="<?php echo $key['value']; ?>">
+                        <label>off/on</label>
                         <input type="checkbox" class="switch_1" checked>
             </div>
 <?php
@@ -382,31 +415,38 @@ class template extends plugin {
         <style>
             
 
-        /* generic */
-        .q-hidden { display: none; }
+/* generic */
+.q-hidden { display: none; }
 
-        /* tabs */
-        .q-tab {  }
+/* tabs */
+.q-tab {  }
 
-        .tab-targets { margin-bottom: 40px; }
+.tab-targets { margin-bottom: 40px; }
 
-        /* tab triggers */
-        .tab-trigger { display: inline; }
-        .tab-trigger.active { font-weight: bold; }
+/* tab triggers */
+.tab-trigger { display: inline; }
+.tab-trigger.active { font-weight: bold; }
 
-        /* tab targets */
-        .tab-target { display: none; }
-        .tab-target.active { display: block; }
+/* tab targets */
+.tab-target { display: none; }
+.tab-target.active { display: block; }
 
-        /* options */
-        .q-consent-option{ background-color: #f2f2f2; width: 60px; height: 30px; border: 1px solid #ddd; }
-        .q-consent-option > .slide { width: 50%; height: 28px; float: left; cursor: pointer; }
-        .q-consent-option > .off { background-color: red; }
-        .q-consent-option > .on { background-color: green; float: right; }
-        .q-consent-option > .disabled { cursor: not-allowed; }
+/* options */
+body .q-bsg label {
+    display: block;
+    font-size: xx-small;
+    color: #888;
+    margin-bottom: .5rem;
+}
+
+.q-consent-option > .disabled { cursor: not-allowed; }
+
+.q-tab-target .row .col-12 {
+    padding: 0;
+}
 
 /* Top Banner */
-body .bs4 .q-consent-bar.card {
+body .q-bsg .q-consent-bar.card {
     background: #00A8DC; 
     color: #fff;
     border-radius: 0;
@@ -450,16 +490,16 @@ body .q-tag-target .description {
 }
 
 
-body .bs4 .q-consent-bar.card a {
+body .q-bsg .q-consent-bar.card a {
     display: unset;
     display: inline;
     color: white;
     text-decoration: underline !important;
 }
-.bs4.featherlight-inner a {
+body .q-bsg.featherlight-inner a {
     color: #8ac53f;
 }
-.bs4.featherlight-inner a:hover {
+body .q-bsg.featherlight-inner a:hover {
     color: #7cb138;
 }
 .q-consent-bar .card-body,
@@ -473,36 +513,36 @@ body .bs4 .q-consent-bar.card a {
 
 
 /* Typography Reset */
-body .bs4 h1, body .bs4 h2,body .bs4 h3, body .bs4 h4, body .bs4 h5 {
+body .q-bsg h1, body .q-bsg h2,body .q-bsg h3, body .q-bsg h4, body .q-bsg h5 {
     font-family: "Sanchez", Georgia, serif;
 }
-body .bs4 h1, body .bs4 h2, body .bs4 h3 {
+body .q-bsg h1, body .q-bsg h2, body .q-bsg h3 {
 font-weight: 300;
 }
-body .bs4 {
+body .q-bsg {
     font-family: "Lato", Georgia, serif;
 }
 /* Button Reset */
-body .bs4 button.btn-primary {
+body .q-bsg button.btn-primary {
     margin: 0 10px;
     background-color: #8ac53f;
     border-color: #7cb138;
 }
-body .bs4 button.btn-primary:hover {
+body .q-bsg button.btn-primary:hover {
     background-color: #7cb138;
     border-color: #8ac53f;
     box-shadow: none;
 }
-body .bs4 button.btn-primary:disabled {
+body .q-bsg button.btn-primary:disabled {
     background-color: #777;
 }
 
 /* Modal panel */
-body .featherlight-content .bs4 > .q-tab-triggers  {
+body .featherlight-content .q-bsg > .q-tab-triggers  {
     margin-left: 0;
     margin-bottom: 40px;
 }
-body .bs4 .q-consent-wrapper{
+body .q-bsg .q-consent-wrapper{
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -514,24 +554,24 @@ body .bs4 .q-consent-wrapper{
 
 }
 
-body .bs4 [type="checkbox"]:not(:checked), body .bs4 [type="checkbox"]:checked, body .bs4 [type="radio"]:not(:checked), body .bs4 [type="radio"]:checked {
+body .q-bsg [type="checkbox"]:not(:checked), body .q-bsg [type="checkbox"]:checked, body .q-bsg [type="radio"]:not(:checked), body .q-bsg [type="radio"]:checked {
     position: relative;
     left: 0;
 }
 /* PLUGIN Toggle Switch Credit: */
-body .bs4 .q-consent-option > .q-switch-box:last-of-type {
+body .q-bsg .q-consent-option > .q-switch-box:last-of-type {
     opacity: 0;
     height: 0px;
     width: 0px;
 }
-body .bs4 .q-consent-option {
+body .q-bsg .q-consent-option {
     position: absolute;
     right: 15px;
 }
-body .bs4 .q-consent-padding {
+body .q-bsg .q-consent-padding {
     margin-bottom:30px;
 }
-body .bs4 span.toggle_legend {
+body .q-bsg span.toggle_legend {
     float: right;
     display: block;
     text-align: right;
@@ -540,7 +580,7 @@ body .bs4 span.toggle_legend {
     font-size: 60%;
     padding-right: 15px;
 }
-body .bs4 .q-switch_box {
+body .q-bsg .q-switch_box {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -560,11 +600,11 @@ body .bs4 .q-switch_box {
 
 /* Switch 1 Specific Styles Start */
 
-body .bs4 .box_1{
+body .q-bsg .box_1{
     background: transparent;
 }
 
-body .bs4 input[type="checkbox"].switch_1{
+body .q-bsg input[type="checkbox"].switch_1{
     font-size: 15px;
     -webkit-appearance: none;
        -moz-appearance: none;
@@ -580,11 +620,11 @@ body .bs4 input[type="checkbox"].switch_1{
     transition: all .2s ease-in-out;
   }
   
-body .bs4 input[type="checkbox"].switch_1:checked{
+body .q-bsg input[type="checkbox"].switch_1:checked{
     background: #8ac53f;
   }
   
-body .bs4 input[type="checkbox"].switch_1:after{
+body .q-bsg input[type="checkbox"].switch_1:after{
     position: absolute;
     content: "";
     width: 1em;
@@ -600,7 +640,7 @@ body .bs4 input[type="checkbox"].switch_1:after{
     transition: all .2s ease-in-out;
   }
   
-body .bs4 input[type="checkbox"].switch_1:checked:after{
+body .q-bsg input[type="checkbox"].switch_1:checked:after{
     left: calc(100% - 1em);
   }
 

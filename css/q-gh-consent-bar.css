@@ -1,26 +1,26 @@
 /* Consent Bar - General */
 
-.q-consent-bar.card {
+body .q-bsg .q-consent-bar.card {
     background: #00A8DC; /* system dialogue color */
     color: #fff;
     border-radius: 0;
     border: 0;
     line-height:38px;
 }
-.q-consent-bar .row.card-body button {
+body .q-bsg .q-consent-bar .row.card-body button {
     margin:0 10px;
 }
-.q-consent-bar .btn-primary {   
+body .q-bsg .q-consent-bar .btn-primary {   
     background-color: #8ac53f; /* button against system dialogue color */
     border-color: lightblue;
 }
-.q-consent-bar .btn-primary:hover {
+body .q-bsg .q-consent-bar .btn-primary:hover {
     background-color: #7cb138;
     border-color: darkcyan;
 }
 
 /* Switch Plugin - CREDIT: https://bootsnipp.com/snippets/xrnNM */
-.q-consent-wrapper{
+body .q-bsg .q-consent-wrapper{
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -32,7 +32,7 @@
             transform: translateY(-50%);
 }
 
-.q-switch-box{
+body .q-bsg .q-switch-box{
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -52,11 +52,11 @@
 
 /* Switch 1 Specific Styles Start */
 
-.box_1{
+body .q-bsg .box_1{
     background: #eee;
 }
 
-input[type="checkbox"].switch_1{
+body .q-bsg input[type="checkbox"].switch_1{
     font-size: 30px;
     -webkit-appearance: none;
        -moz-appearance: none;
@@ -72,11 +72,11 @@ input[type="checkbox"].switch_1{
     transition: all .2s ease-in-out;
   }
   
-  input[type="checkbox"].switch_1:checked{
+  body .q-bsg input[type="checkbox"].switch_1:checked{
     background: #0ebeff;
   }
   
-  input[type="checkbox"].switch_1:after{
+  body .q-bsg input[type="checkbox"].switch_1:after{
     position: absolute;
     content: "";
     width: 1.5em;
@@ -92,7 +92,7 @@ input[type="checkbox"].switch_1{
     transition: all .2s ease-in-out;
   }
   
-  input[type="checkbox"].switch_1:checked:after{
+  body .q-bsg input[type="checkbox"].switch_1:checked:after{
     left: calc(100% - 1.5em);
   }
     
