@@ -86,7 +86,7 @@ class geotarget extends plugin {
 
         if ( 
             is_null( $country )
-            || ! isset( $country['continent'] )
+            // || ! isset( $country['continent'] )
         ){
 
             helper::log( 'No country code passed or corrupt.' );
@@ -94,11 +94,38 @@ class geotarget extends plugin {
             return false;
 
         }
-        
-        helper::log( 'Contient: '.$country['continent'] );
+
+        // we need to get a list of all the countries from the wpengine-geoid plugin ##
+        if (  
+            ! function_exists( 'geoip_country_list' )
+            || ! geoip_country_list()
+        ) {
+
+            helper::log( 'geoip_country_list function missing or returned empty results' );
+
+            return false;
+            
+        }
+
+        // now try to get continent based on defined country list - filterable ##
+        $countries = \apply_filters( 'q_geoip_country_list', geoip_country_list() );
+
+        // check if we have a match ##
+        if (  
+            ! isset( $countries[$country] )
+            || ! isset( $countries[$country]['continent'] )
+        ){
+
+            helper::log( 'No match in country list for: '.$country );
+
+            return false;
+
+        }
+
+        helper::log( 'Contient: '.$countries[$country]['continent'] );
 
         // kick it back ##
-        return $country['continent'];
+        return $countries[$country]['continent'];
         
 	}
 
@@ -119,6 +146,7 @@ class geotarget extends plugin {
         (
             isset( self::$geotarget['continent'] )
             && self::$geotarget['continent']
+
             && 'EU' == self::$geotarget['continent']
         ) ?
         true : 
