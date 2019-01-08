@@ -75,11 +75,11 @@ class template extends plugin {
         \wp_enqueue_script( 'q-consent-js' );
 
         // @todo - add styles ##
-        // wp_register_style( 'q-consent-css', Q_CONSENT_URL.'scss/index.css', '', plugin::$version );
-        // wp_enqueue_style( 'q-consent-css' );
+         wp_register_style( 'q-consent-css', Q_CONSENT_URL.'scss/index.css', '', plugin::$version );
+         wp_enqueue_style( 'q-consent-css' );
 
         //TESTING ONLY! #HACK @todo - Benny, is this hack required, please explain ? ##
-        \wp_enqueue_style('bs_hack', Q_CONSENT_URL.'deletes/rootstrap.css', array(), '4.0', false );
+//        \wp_enqueue_style('bs_hack', Q_CONSENT_URL.'deletes/rootstrap.css', array(), '4.0', false );
         #\wp_enqueue_style( 'bootstrap-css', 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css' );
 
     }
@@ -133,27 +133,23 @@ class template extends plugin {
 
 ?>
 <div class="q-bsg">
-    <div class="q-consent-bar card text-white">
-        <i class="cross d-none d-md-block"></i>
-        <div class="row card-body">
-            <div class="content col-6 col-md-8 ">
-                This website uses cookies for basic functionality, analytics, and marketing. Visit our <a 
-                    href="<?php echo \get_permalink(); ?>#/modal/consent/tab/privacy/" 
-                    class="modal-trigger"
-                    data-tab-trigger="privacy">Privacy Policy</a> page to find out more.
-            </div>
-            
-            <div class="col-6 col-md-4 cta float-right">
-                <div class="d-inline-block float-right">
-                    <a href="<?php echo \get_permalink(); ?>#/modal/consent/tab/settings/" class="modal-trigger" data-tab-trigger="settings">
-                        <button type="button" class="btn btn-primary">
-                              SETTINGS
-                        </button>
-                    </a>
+    <div class="q-consent-bar">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-xl-9 col-lg-8 col-md-7 col-12 content">
+                    This website uses cookies for basic functionality, analytics, and marketing. Visit our <a
+                        href="<?php echo \get_permalink(); ?>#/modal/consent/tab/privacy/"
+                        class="modal-trigger"
+                        data-tab-trigger="privacy">Privacy Policy</a> page to find out more.
                 </div>
-                <div class="d-inline-block float-right">
+
+                <div class="col-xl-3 col-lg-4 col-md-5 col-12 cta">
+                    <a class="btn btn-border" href="<?php echo \get_permalink(); ?>#/modal/consent/tab/settings/" class="modal-trigger" data-tab-trigger="settings">
+                        SETTINGS
+                    </a>
+
                     <button type="button" class="btn btn-primary accept q-consent-set" data-q-consent-marketing="1" data-q-consent-analytics="1">
-                            ACCEPT
+                        ACCEPT
                     </button>
                 </div>
             </div>
@@ -390,15 +386,12 @@ class template extends plugin {
 
 ?>
         <style>
-            
 
 /* generic */
 .q-hidden { display: none; }
 
 /* tabs */
 .q-tab {  }
-
-.tab-targets { margin-bottom: 40px; }
 
 /* tab triggers */
 .tab-trigger { display: inline; }
@@ -409,35 +402,11 @@ class template extends plugin {
 .tab-target.active { display: block; }
 
 /* options */
-body .q-bsg label {
-    display: block;
-    font-size: xx-small;
-    color: #888;
-    margin-bottom: .5rem;
-}
-
 .q-consent-option > .disabled { cursor: not-allowed; }
 
-.q-tab-target .row .col-12 {
-    padding: 0;
-}
-
-/* Top Banner */
-body .q-bsg .q-consent-bar.card {
-    background: #00A8DC; 
-    color: #fff;
-    border-radius: 0;
-    border: 0;
-    line-height:38px;   
-    /* background-color: #00a9e0; @TODO - Why is our Snackbar Azure color different than our Zeplin Styleguide...they are too similar to not match */
-    border-radius: 0;
-}
-            
-/* generic damn */
 .q-hidden { display: none; }
 
 /* tabs */
-
 
 /* tab triggers */
 .tab-trigger { display: inline; }
@@ -446,195 +415,6 @@ body .q-bsg .q-consent-bar.card {
 /* tab targets */
 .tab-target { display: none; }
 .tab-target.active { display: block; }
-
-body .q-tab-target .col-12.options {
-    padding-left: 0;
-    padding-right: 0;
-}
-body .q-tab-target .container, 
-body .q-tag-target .description {
-    padding-left: 0;
-    padding-right: 0;
-}
-.tab-targets {
-    margin-bottom: 40px;
-}
-
-body .q-bsg .q-consent-bar.card a {
-    display: unset;
-    display: inline;
-    color: white;
-    text-decoration: underline !important;
-}
-body .q-bsg.featherlight-inner a {
-    color: #8ac53f;
-}
-body .q-bsg.featherlight-inner a:hover {
-    color: #7cb138;
-}
-.q-consent-bar .card-body,
-.q-consent-bar .card-body div,
-.q-consent-bar .card-body p {
-    color: white;
-    font-size: 11pt;
-    line-height:38px;   
-}
-
-
-
-/* Typography Reset */
-body .q-bsg h1, body .q-bsg h2,body .q-bsg h3, body .q-bsg h4, body .q-bsg h5 {
-    font-family: "Sanchez", Georgia, serif;
-}
-body .q-bsg h1, body .q-bsg h2, body .q-bsg h3 {
-font-weight: 300;
-}
-body .q-bsg {
-    font-family: "Lato", Georgia, serif;
-}
-/* Button Reset */
-body .q-bsg button.btn-primary {
-    margin: 0 10px;
-    background-color: #8ac53f;
-    border-color: #7cb138;
-}
-body .q-bsg button.btn-primary:hover {
-    background-color: #7cb138;
-    border-color: #8ac53f;
-    box-shadow: none;
-}
-body .q-bsg button.btn-primary:disabled {
-    background-color: #777;
-}
-
-/* Modal panel */
-body .featherlight-content .q-bsg > .q-tab-triggers  {
-    margin-left: 0;
-    margin-bottom: 40px;
-}
-body .q-bsg .q-consent-wrapper{
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    width: 100px;
-    height: 100px;
-    -ms-flex-wrap: wrap;
-        flex-wrap: wrap;
-    padding-top: 6px;
-
-}
-
-body .q-bsg [type="checkbox"]:not(:checked), body .q-bsg [type="checkbox"]:checked, body .q-bsg [type="radio"]:not(:checked), body .q-bsg [type="radio"]:checked {
-    position: relative;
-    left: 0;
-}
-/* PLUGIN Toggle Switch Credit: */
-body .q-bsg .q-consent-option > .q-switch-box:last-of-type {
-    opacity: 0;
-    height: 0px;
-    width: 0px;
-}
-body .q-bsg .q-consent-option {
-    position: absolute;
-    right: 15px;
-}
-body .q-bsg .q-consent-padding {
-    margin-bottom:30px;
-}
-body .q-bsg span.toggle_legend {
-    float: right;
-    display: block;
-    text-align: right;
-    width: 100%;
-    opacity: .4;
-    font-size: 60%;
-    padding-right: 15px;
-}
-body .q-bsg .q-switch_box {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    max-width: 50px;
-    min-width: 50px;
-    height: 50px;
-    -webkit-box-pack: center;
-        -ms-flex-pack: center;
-            justify-content: center;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
-    -webkit-box-flex: 1;
-        -ms-flex: 1;
-            flex: 1;
-}
-
-/* Switch 1 Specific Styles Start */
-
-body .q-bsg .box_1{
-    background: transparent;
-}
-
-body .q-bsg input[type="checkbox"].switch_1{
-    font-size: 15px;
-    -webkit-appearance: none;
-       -moz-appearance: none;
-            appearance: none;
-    width: 2em;
-    height: 1em;
-    background: #ddd;
-    border-radius: 2em;
-    position: relative;
-    cursor: pointer;
-    outline: none;
-    -webkit-transition: all .2s ease-in-out;
-    transition: all .2s ease-in-out;
-  }
-  
-body .q-bsg input[type="checkbox"].switch_1:checked{
-    background: #8ac53f;
-  }
-  
-body .q-bsg input[type="checkbox"].switch_1:after{
-    position: absolute;
-    content: "";
-    width: 1em;
-    height: 1em;
-    border-radius: 50%;
-    background: #fff;
-    -webkit-box-shadow: 0 0 .25em rgba(0,0,0,.3);
-            box-shadow: 0 0 .25em rgba(0,0,0,.3);
-    -webkit-transform: scale(.7);
-            transform: scale(.7);
-    left: 0;
-    -webkit-transition: all .2s ease-in-out;
-    transition: all .2s ease-in-out;
-  }
-  
-body .q-bsg input[type="checkbox"].switch_1:checked:after{
-    left: calc(100% - 1em);
-  }
-
-
-        /* following along with the hacks */
-        .q-consent-bar.card {
-            background: #00A8DC; /* system dialogue color */
-            color: #fff;
-            border-radius: 0;
-            border: 0;
-            line-height:38px;
-        }
-        .q-consent-bar .row.card-body button {
-            margin:0 10px;
-        }
-        .q-consent-bar .btn-primary {   
-            background-color: #8ac53f; /* button against system dialogue color */
-            border-color: lightblue;
-        }
-        .q-consent-bar .btn-primary:hover {
-            background-color: #7cb138;
-            border-color: darkcyan;
-        }
-
         </style>
 <?php
 

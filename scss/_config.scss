@@ -1,0 +1,19 @@
+$c-blue: #00a9e0;
+
+// @TODO remove
+body {
+  max-width: unset !important;
+  .row {
+    width: auto !important;
+  }
+}
+
+.q-bsg .q-consent-bar .btn {
+  color: white;
+  font-size: 14px;
+
+  &.btn-border {
+    border-color: white !important;
+    color: white;
+  }
+}

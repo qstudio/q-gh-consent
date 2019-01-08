@@ -1,5 +1,49 @@
-@import "grid";
-@import "common";
-@import "variables";
-@import "q-gh-brand-bar";
-@import "q-gh-promo";
+@import "config";
+
+.q-bsg .q-consent-bar {
+  background-color: $c-blue;
+  color: white;
+  padding: 10px 0;
+
+  .content {
+    font-size: 14px;
+
+    a {
+      color: white;
+      text-decoration: underline;
+
+      &:hover {
+        color: white;
+      }
+    }
+  }
+
+  .cta {
+    text-align: right;
+
+    .btn {
+      padding: 10px 25px;
+
+      &:last-child {
+        color: $c-blue;
+        background-color: white;
+        border-color: white;
+      }
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .q-bsg .q-consent-bar {
+    position: fixed;
+    bottom: 0;
+    z-index: 999;
+
+    .cta {
+      margin-top: 15px;
+    }
+    .content, .cta {
+      text-align: center;
+    }
+  }
+}
