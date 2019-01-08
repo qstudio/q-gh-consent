@@ -45,6 +45,7 @@ defined( 'ABSPATH' ) OR exit;
  */
 $autoload = array(
         'core/plugin'
+    ,   'core/geotarget'
     ,   'core/helper'
     ,   'core/api'
     ,   'core/cookie'

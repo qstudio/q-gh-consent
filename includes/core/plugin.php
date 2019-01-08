@@ -17,6 +17,14 @@ class plugin {
     static $device; // current device handle ( 'desktop || handheld' ) ##
     protected static $debug = true;
     static $slug = 'q-consent';
+
+    // will contain the geotarget variables - https://wpengine.com/support/developers-guide-geotarget/ ## 
+    static $geotarget = [
+        'continent' => '',
+        'country'   => '',
+        // 'region'    => '',
+        // 'city'      => ''
+    ];
     
     // default cookie values ##
     static $defaults = [

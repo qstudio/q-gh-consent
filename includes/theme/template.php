@@ -6,6 +6,7 @@ namespace q\consent\theme;
 use q\consent\core\plugin as plugin;
 use q\consent\core\helper as helper;
 use q\consent\core\api as api;
+use q\consent\core\geotarget as geotarget;
 use q\consent\core\cookie as cookie;
 
 /**
@@ -28,7 +29,9 @@ class template extends plugin {
     {
 
         // check if the feature has been activated in the admin ##
-        if ( ! \get_option( plugin::$slug )['consent'] ) {
+        if ( 
+            ! \get_option( plugin::$slug )['consent'] 
+        ) {
             
             // log ##
             helper::log( 'Consent UI not active' );
@@ -61,23 +64,24 @@ class template extends plugin {
 
         // Now we can localize the script with our data.
         $translation_array = array(
-                'ajax_nonce'    => wp_create_nonce( 'q_consent' )
-            ,   'ajax_url'      => get_home_url( '', 'wp-admin/admin-ajax.php' )
+                'ajax_nonce'    => \wp_create_nonce( 'q_consent' )
+            ,   'ajax_url'      => \get_home_url( '', 'wp-admin/admin-ajax.php' )
             ,   'saved'         => __( "Saved!", 'q-consent' )
-            ,   'disabled'         => __( "Functional Cookies cannot be disabled", 'q-consent' )
+            ,   'disabled'      => __( "Functional Cookies cannot be disabled", 'q-consent' )
         );
-        wp_localize_script( 'q-consent-js', 'q_consent', $translation_array );
+        \wp_localize_script( 'q-consent-js', 'q_consent', $translation_array );
 
         // enqueue the script ##
         \wp_enqueue_script( 'q-consent-js' );
 
         // @todo - add styles ##
-        // wp_register_style( 'q-consent-css', Q_CONSENT_URL.'scss/index.css', '', Plugin::$version );
+        // wp_register_style( 'q-consent-css', Q_CONSENT_URL.'scss/index.css', '', plugin::$version );
         // wp_enqueue_style( 'q-consent-css' );
 
-        //TESTING ONLY! #HACK 
+        //TESTING ONLY! #HACK @todo - Benny, is this hack required, please explain ? ##
         \wp_enqueue_style('bs_hack', Q_CONSENT_URL.'deletes/rootstrap.css', array(), '4.0', false );
         #\wp_enqueue_style( 'bootstrap-css', 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css' );
+
     }
 
 
@@ -110,9 +114,21 @@ class template extends plugin {
         // check if the user has already given active consent - if not, we continue to push them to take an action ##
         if ( cookie::consent() ) {
 
+            helper::log( 'Consent already given, so do not display bar' );
+
             return false;
 
         }
+
+        // check if the user is in the EU contient, for GDPR compliance
+        if ( ! geotarget::is_eu() ) {
+
+            helper::log( 'User is outside the EU, so we do not need to show the bar' );
+
+            return false;
+
+        }
+
 ?>
 <div class="q-bsg">
     <div class="q-consent-bar card text-white">
@@ -127,7 +143,7 @@ class template extends plugin {
             
             <div class="col-6 col-md-4 cta float-right">
                 <div class="d-inline-block float-right">
-                    <a href="https://greenheartorg.staging.wpengine.com/#/modal/consent/tab/settings/" class="modal-trigger" data-tab-trigger="settings">
+                    <a href="<?php echo \get_permalink(); ?>#/modal/consent/tab/settings/" class="modal-trigger" data-tab-trigger="settings">
                         <button type="button" class="btn btn-primary">
                               SETTINGS
                         </button>
@@ -213,7 +229,7 @@ class template extends plugin {
                                         <div class="q-consent-wrapper">
                                             <?php echo self::option([
                                                 'field'     => 'functional',
-                                                'value'     => 1, // no opt-out
+                                                'value'     => 1, // no opt-out ##
                                                 'disabled'  => true
                                             ]); ?>
                                         </div>
@@ -257,7 +273,7 @@ class template extends plugin {
             <div class="row d-block">
                 <div class="col-6 col-md-4 cta float-right">
                     <div class="d-inline-block float-right">
-                        <a href="https://greenheartorg.staging.wpengine.com/#/modal/consent/tab/settings/" class="modal-trigger" data-tab-trigger="settings">
+                        <a href="<?php echo \get_permalink(); ?>#/modal/consent/tab/settings/" class="modal-trigger" data-tab-trigger="settings">
                             <button 
                             class="btn accept q-consent-set btn-primary"
                             data-q-consent-marketing="<?php echo self::$cookie['marketing']; ?>" 
@@ -272,7 +288,6 @@ class template extends plugin {
                         <button type="button" class="btn reset q-consent-reset">
                             RESET
                         </button>
-
                     </div>
                 </div>
             </div>
@@ -290,7 +305,7 @@ class template extends plugin {
      * Tries to get privacy Policy via API on greenheart.org
      * Adds a link to open the settings
      * 
-     * @todo    make sure privacy policy exists
+     * @todo    make sure privacy policy exists on greenheatrorg
      * @since   0.1.0
      */
     public static function privacy()
@@ -298,45 +313,7 @@ class template extends plugin {
 
 ?>
         <div class="q-tab-target" data-tab-target="privacy">
-            <!-- <?php echo api::privacy(); ?> TODO - Reinstate dynamic Privacy fetching -->
-
-
-
-<h3>Privacy Policy</h3>
-<p>Thank you for visiting our website. This privacy policy tells you how Greenheart Exchange Online uses personally identifying information (PII) collected at this site. Please read this privacy policy before using the site or submitting any personal information. By using the site, you are accepting the practices described in this privacy policy. These practices may be changed, but any changes will be posted and changes will only apply to activities and information on a going forward, not retroactive basis. You are encouraged to review the privacy policy whenever you visit the site to make sure that you understand how any personal information you provide will be used.</p>
-<p>Note that the privacy practices set forth in this privacy policy are for this website only. If you link to other websites, please review the privacy policies posted at those sites.</p>
-<p><strong>Collection of Personally Identifying Information</strong><br>
-PII includes names, postal addresses, email addresses, etc., when voluntarily submitted by our visitors. The information you provide is used to fulfill your specific request. This information is only used to fulfill your specific request, unless you give us permission to use it in another manner, for example to add you to one of our mailing lists. If you identify yourself to us by sending us an email with questions or comments. We may, at our sole discretion, either file your comments for future reference or discard the information after we have received it.</p>
-<p>We exercise great care in providing secure transmissions of your PII from your PC to our servers. Our secure server software encrypts information, ensuring that Internet transactions remain private (unless sent by an unsecured means such as email). Neither Greenheart Exchange nor any telephone network nor service providers we utilize are responsible for incorrect or inaccurate transcriptions of information or for any human error, technical malfunctions, lost-delayed data transmission, omission, interruption, deletion, defect, line failures or any telephone network, computer equipment, software, inability to access any website or on-line service or any other error or malfunction or misdirected entries.</p>
-<p><strong>Cookie/Tracking Technology</strong><br>
-The site may use cookie and tracking technology to collect non-personal identifying information depending on the features offered. Non-PII might include the browser you use, the type of computer operating system you use, the Internet service providers and other similar information. Our system also automatically gathers information about the areas you visit on our sites and about the links you may select from within our site to the other areas of the World Wide Web or elsewhere online. We use such information in the aggregate to understand how our users as a group use the services and resources provided on our site. This way we know which areas of our sites are favorites of our users, which areas need improvement and what technologies are being used so that we may continually improve our sites. Cookie and tracking technology are useful for gathering information such as identifying a website user’s browser type and operating system, tracking the number of visitors to the site, and understanding how visitors use the site. Cookies can also help customize the site for visitors. Personal information cannot be collected via cookies and other tracking technology, however, if you previously provided personally identifiable information, cookies may be tied to such information. Aggregate cookie and tracking information may be shared with third parties but that aggregate information does not identify individual website users. Our web servers do not record email addresses of the visitors unless information is submitted by users. We may determine what technology is available through your browser in order to provide you with the most appropriate version of a web page.</p>
-<p><strong>Distribution of Information</strong><br>
-We may share information gathered by us from our website with governmental agencies or other companies assisting us in fraud prevention or investigation. We may do so when: (1) permitted or required by law; or, (2) trying to protect against or prevent actual or potential fraud or unauthorized transactions; or, (3) investigating fraud which has already taken place. The information is not provided to these companies for marketing purposes.</p>
-<p>Third parties who provide hosting services or other day-to-day services that make possible the operation of this website may have access to information that you provide us to the extent those third parties require access to our databases to service the website.</p>
-<p>We reserve the right to transfer information we have secured from you in connection with the sale or transfer of all or part of our assets. We are not responsible for any breach of security or for any actions of any third parties that receive information from us.</p>
-<p>This website is operated in the United States of America. If you are located outside of the United States, please be aware that any information you provide will be transferred to the United States. By using this website, you consent to this transfer.</p>
-<p><strong>Commitment to Data Security</strong><br>
-Your personally identifiable information is kept secure. All emails and newsletters from this site allow you to opt out of further mailings.</p>
-<p><strong>Privacy Contact information</strong><br>
-If you have any questions, concerns, or comments about our privacy policy you may contact us using the information below:<br>
-By email: support@greenheart.org<br>
-By phone: 312-944-2544</p>
-<p>We reserve the right to make changes to this policy at any time and you should check this policy periodically for updates. Any changes to this policy will be posted here.</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            <!-- END PRIVACY POLICY HACK -->
+            <?php echo api::privacy(); ?>
         </div>
 <?php
 
@@ -383,18 +360,16 @@ By phone: 312-944-2544</p>
             // loop out the same element twice, giving different classes ##
             foreach( $array as $key ) {
 
-
 ?>
             <div 
-
                 class="q-switch-box box_1 <?php echo $key['class']; ?> <?php echo $key['disabled']; ?>" 
                 data-q-consent-value="<?php echo $key['value']; ?>">
-                        <label>off/on</label>
-                        <input type="checkbox" class="switch_1" checked>
+                    <label>off/on</label>
+                    <input type="checkbox" class="switch_1" checked>
             </div>
 <?php
 
-        // loop ##
+            // loop ##
             }
 
 ?>
@@ -471,24 +446,17 @@ body .q-bsg .q-consent-bar.card {
 .tab-target.active { display: block; }
 
 body .q-tab-target .col-12.options {
-
     padding-left: 0;
     padding-right: 0;
-
 }
 body .q-tab-target .container, 
 body .q-tag-target .description {
-
     padding-left: 0;
     padding-right: 0;
-
 }
 .tab-targets {
-
     margin-bottom: 40px;
-
 }
-
 
 body .q-bsg .q-consent-bar.card a {
     display: unset;
