@@ -44,14 +44,14 @@ class geotarget extends plugin {
         $country = getenv('HTTP_GEOIP_COUNTRY_CODE');
         // $region = getenv( 'HTTP_GEOIP_REGION' );
 
+        // fake ##
+        // $country = 'LK';
+
         // log ##
         helper::log( $country );
 
-        $country = 'LK';
-        // $region = getenv( 'HTTP_GEOIP_REGION' );
-
         // log ##
-        helper::log( 'FAKE: '. $country );
+        // helper::log( 'FAKE: '. $country );
 
         // if nothing cooking, bale ##
         if (
@@ -146,8 +146,6 @@ class geotarget extends plugin {
     {
 
         // we need to check if we have a continent, and if it == 'EU' ##
-
-        // faked ##
         return 
         (
             isset( self::$geotarget['continent'] )

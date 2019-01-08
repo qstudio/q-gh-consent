@@ -121,7 +121,9 @@ class template extends plugin {
         }
 
         // check if the user is in the EU contient, for GDPR compliance
-        if ( ! geotarget::is_eu() ) {
+        if ( 
+            ! helper::is_localhost()
+            && ! geotarget::is_eu() ) {
 
             helper::log( 'User is outside the EU, so we do not need to show the bar' );
 
