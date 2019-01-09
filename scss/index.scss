@@ -1,5 +1,16 @@
-@import "grid";
-@import "common";
 @import "variables";
-@import "q-gh-brand-bar";
-@import "q-gh-promo";
+@import "featherlight";
+
+.q-consent {
+  @import "config";
+  @import "bar";
+  @import "modal";
+}
+
+// @TODO remove
+body {
+  max-width: unset !important;
+  .row {
+    width: auto !important;
+  }
+}

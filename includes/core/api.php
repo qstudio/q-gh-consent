@@ -45,7 +45,7 @@ class api extends plugin {
         if ( false === ( $string = \get_site_transient( 'q_consent_privacy' ) ) ) {
 
             // try to fetch privacy content from API ##
-            // The API on greenheart.org is extended with a new "page" end-point to accept "privacy" parameter and uses get_page_by_path() from there ## 
+            // The API on greenheart.org is extended with a new "page" end-point to accept "privacy" parameter and uses get_page_by_path() from there ##
             // http://v2.wp-api.org/reference/pages/
             // https://greenheart.org/api/v2/page/get/privacy
 
@@ -79,7 +79,7 @@ By phone: 312-944-2544</p>
             // use local when local ##
             $url =
                 helper::is_localhost() ?
-                'https://ghorg.qlocal.com/api/v2/page/get/privacy' : 
+                'https://ghorg.qlocal.com/api/v2/page/get/privacy' :
                 'https://greenheart.org/api/v2/page/get/privacy' ;
 
             global $wp_version;
@@ -97,17 +97,17 @@ By phone: 312-944-2544</p>
                 'sslverify'   => helper::is_localhost() ? false : true , // no SSL locally ##
                 'stream'      => false,
                 'filename'    => null
-            ); 
+            );
 
             // login user via a GET request to API v2 ##
-            $response = \wp_remote_get( $url, $args ); 
+            $response = \wp_remote_get( $url, $args );
 
             // default ##
-            $string = $default; 
-            
+            $string = $default;
+
             // array returned ##
             if ( is_array( $response ) ){
-                
+
                 // body is JSON encoded ##
                 $body = json_decode( $response['body'] ) ;
 
