@@ -1,43 +1,106 @@
+body .featherlight .featherlight-content {
+  border-radius: 4px;
+  padding: 0; }
+  body .featherlight .featherlight-content p {
+    padding: 0; }
+  body .featherlight .featherlight-content .featherlight-close-icon {
+    right: 15px;
+    top: 15px; }
+
+.q-consent .row:first-child {
+  margin-left: -15px; }
+.q-consent h1, .q-consent h2, .q-consent h3, .q-consent h4, .q-consent h5, .q-consent h6, .q-consent strong {
+  color: #363637; }
+.q-consent h3 {
+  font-family: 'Sanchez';
+  font-size: 28px; }
+.q-consent h5 {
+  font-size: 18px;
+  font-weight: bold;
+  padding-top: 5px; }
+.q-consent a.btn:hover {
+  color: white; }
+.q-consent .btn {
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  padding: 10px 25px; }
+  .q-consent .btn.btn-border {
+    border-color: white !important; }
+  .q-consent .btn.btn-light {
+    color: #00a9e0;
+    background-color: white;
+    border-color: white; }
+  .q-consent .btn.btn-dark {
+    background-color: #6d6e70;
+    border-color: #6d6e70; }
+  .q-consent .btn.btn-success {
+    background-color: #7cb138;
+    border-color: #7cb138; }
+.q-consent .q-consent-bar {
+  background-color: #00a9e0;
+  color: white;
+  padding: 10px 0; }
+  .q-consent .q-consent-bar .content {
+    font-size: 14px; }
+    .q-consent .q-consent-bar .content a {
+      color: white;
+      text-decoration: underline; }
+      .q-consent .q-consent-bar .content a:hover {
+        color: white; }
+  .q-consent .q-consent-bar .cta {
+    text-align: right; }
+  @media (max-width: 767px) {
+    .q-consent .q-consent-bar {
+      position: fixed;
+      bottom: 0;
+      z-index: 999; }
+      .q-consent .q-consent-bar .cta {
+        margin-top: 15px; }
+        .q-consent .q-consent-bar .cta .btn {
+          width: 47%; }
+      .q-consent .q-consent-bar .content, .q-consent .q-consent-bar .cta {
+        text-align: center; } }
+.q-consent .q-consent-modal {
+  font-size: 16px; }
+  .q-consent .q-consent-modal h3 {
+    margin-bottom: 20px; }
+  .q-consent .q-consent-modal p {
+    font-size: 16px; }
+  .q-consent .q-consent-modal .nav-tabs {
+    margin: 0;
+    padding: 0 25px; }
+    .q-consent .q-consent-modal .nav-tabs .nav-link {
+      background-color: transparent;
+      border-right: none;
+      border-top: 0;
+      color: #7cb138;
+      margin: 0 15px;
+      padding: 20px 0; }
+      .q-consent .q-consent-modal .nav-tabs .nav-link:not(.active) {
+        border-color: transparent !important; }
+      .q-consent .q-consent-modal .nav-tabs .nav-link.active {
+        border-left: none;
+        border-bottom: 2px solid #7cb138;
+        color: #363637; }
+  .q-consent .q-consent-modal .tab-targets {
+    padding: 40px; }
+  .q-consent .q-consent-modal .settings {
+    margin: 20px 0; }
+    .q-consent .q-consent-modal .settings .setting {
+      border-bottom: 1px solid #e9eaea;
+      padding: 20px 0; }
+  @media (max-width: 576px) {
+    .q-consent .q-consent-modal .tab-targets {
+      padding: 20px; }
+    .q-consent .q-consent-modal .nav-tabs {
+      padding: 0 5px; }
+    .q-consent .q-consent-modal .btn {
+      width: 47%; } }
+
 body {
   max-width: unset !important; }
   body .row {
     width: auto !important; }
-
-.q-bsg .q-consent-bar .btn {
-  color: white;
-  font-size: 14px; }
-  .q-bsg .q-consent-bar .btn.btn-border {
-    border-color: white !important;
-    color: white; }
-
-.q-bsg .q-consent-bar {
-  background-color: #00a9e0;
-  color: white;
-  padding: 10px 0; }
-  .q-bsg .q-consent-bar .content {
-    font-size: 14px; }
-    .q-bsg .q-consent-bar .content a {
-      color: white;
-      text-decoration: underline; }
-      .q-bsg .q-consent-bar .content a:hover {
-        color: white; }
-  .q-bsg .q-consent-bar .cta {
-    text-align: right; }
-    .q-bsg .q-consent-bar .cta .btn {
-      padding: 10px 25px; }
-      .q-bsg .q-consent-bar .cta .btn:last-child {
-        color: #00a9e0;
-        background-color: white;
-        border-color: white; }
-
-@media (max-width: 576px) {
-  .q-bsg .q-consent-bar {
-    position: fixed;
-    bottom: 0;
-    z-index: 999; }
-    .q-bsg .q-consent-bar .cta {
-      margin-top: 15px; }
-    .q-bsg .q-consent-bar .content, .q-bsg .q-consent-bar .cta {
-      text-align: center; } }
 
 /*# sourceMappingURL=index.css.map */

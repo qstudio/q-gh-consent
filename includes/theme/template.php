@@ -42,7 +42,7 @@ class template extends plugin {
         }
 
         // styles and scripts ##
-        \add_action( 'wp_enqueue_scripts', [ get_class(), 'wp_enqueue_scripts' ], 1 );
+        \add_action( 'wp_enqueue_scripts', [ get_class(), 'wp_enqueue_scripts' ], 99 );
 
         // render consent bar markup - after brand bar at 3 ##
         \add_action( 'q_action_body_open', [ get_class(), 'render' ], 4 );
@@ -132,7 +132,7 @@ class template extends plugin {
         }
 
 ?>
-<div class="q-bsg">
+<div class="q-bsg q-consent">
     <div class="q-consent-bar">
         <div class="container-fluid">
             <div class="row align-items-center">
@@ -148,7 +148,7 @@ class template extends plugin {
                         SETTINGS
                     </a>
 
-                    <button type="button" class="btn btn-primary accept q-consent-set" data-q-consent-marketing="1" data-q-consent-analytics="1">
+                    <button type="button" class="btn btn-light accept q-consent-set" data-q-consent-marketing="1" data-q-consent-analytics="1">
                         ACCEPT
                     </button>
                 </div>
@@ -168,23 +168,25 @@ class template extends plugin {
 ?>
         <div class="q-tab hidden modal-data" data-modal-key="consent">
 
-            <div class="q-bsg">
-                <ul class="q-tab-triggers nav nav-tabs" role="tablist">
-                    <li class="nav-item"><a href="<?php echo \get_permalink(); ?>#/modal/consent/tab/settings" class="q-tab-trigger nav-link active" data-tab-trigger="settings">Settings</a></li>
-                    <li class="nav-item"><a href="<?php echo \get_permalink(); ?>#/modal/consent/tab/privacy" class="q-tab-trigger nav-link" data-tab-trigger="privacy">Privacy</a></li>
-                    
-                </ul>
+            <div class="q-bsg q-consent">
+                <div class="q-consent-modal">
+                    <ul class="q-tab-triggers nav nav-tabs" role="tablist">
+                        <li class="nav-item"><a href="<?php echo \get_permalink(); ?>#/modal/consent/tab/settings" class="q-tab-trigger nav-link active" data-tab-trigger="settings">Settings</a></li>
+                        <li class="nav-item"><a href="<?php echo \get_permalink(); ?>#/modal/consent/tab/privacy" class="q-tab-trigger nav-link" data-tab-trigger="privacy">Privacy</a></li>
 
-                <div class="tab-targets">
-<?php
+                    </ul>
 
-                // load up settings tab ##
-                self::settings();
-            
-                // load up privacy tab ##
-                self::privacy();
+                    <div class="tab-targets">
+    <?php
 
-?>
+                    // load up settings tab ##
+                    self::settings();
+
+                    // load up privacy tab ##
+                    self::privacy();
+
+    ?>
+                    </div>
                 </div>
             </div>
 
@@ -205,89 +207,89 @@ class template extends plugin {
     {
 
 ?>
-        <div class="q-tab-target col-12 " data-tab-target="settings"> 
+        <div class="q-tab-target" data-tab-target="settings">
+            <h3>Cookie Consent Settings</h3>
+            <p>Greenheart uses cookies to let you interact with our services, and for marketing and advertising purposes. Some of these cookies are strictly necessary for our sites to function and by using this site you agree that you have read and understand our use of cookies.</p>
+            <p>Our marketing and advertising cookies are non-essential and you can opt out of using them with this tool. Blocking cookies may impact your experience on our website.</p>
+
+            <div class="settings">
+                <div class="setting">
                     <div class="row">
-                        <h2 class="text-center">Cookie Consent Settings</h2>
-                    </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <p>Greenheart uses cookies to let you interact with our services, and for marketing and advertising purposes. Some of these cookies are strictly necessary for our sites to function and by using this site you agree that you have read and understand our use of cookies. <br /><br />
-                            Our marketing and advertising cookies are non-essential and you can opt out of using them with this tool. Blocking cookies may impact your experience on our website.</p>
+                        <div class="col-sm-3 col-12">
+                            <h5>Functional Cookies</h5>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12 options">
-                            <div class="container">
-                                <div class="row">
-                                    <div class="description col-8 col-md-10">
-                                        <h5>Functional Cookies</h5>
-                                        <p>These cookies are necessary for our sites to function properly. These cookies secure our forms, support login sessions and remember user dialogue. Because the site does not function without these cookies, opt-out is not available. They are not used for marketing or analytics.</p>
-                                    </div>
-                                    <div class="col-4 col-md-2">
-                                        <div class="q-consent-wrapper">
-                                            <?php echo self::option([
-                                                'field'     => 'functional',
-                                                'value'     => 1, // no opt-out ##
-                                                'disabled'  => true
-                                            ]); ?>
-                                        </div>
-                                    </div>
-                                </div>
 
-                                <div class="row">
-                                    <div class="description col-8 col-md-10">
-                                        <h5>Marketing Cookies</h5>
-                                        <p>These cookies are used to enhance the relevance of our advertising on social media and to tailor messages relevant to your interests.</p>
-                                    </div>
-                                    <div class="col-4 col-md-2">
-                                        <div class="q-consent-wrapper">
-                                            <?php echo self::option([
-                                                'field'     => 'marketing',
-                                                'value'     => self::$cookie['marketing'],
-                                                'disabled'  => false
-                                            ]); ?>
-                                        </div>
-                                    </div>
-                                </div>
+                        <div class="col-sm-7 col-12">
+                            <p>These cookies are necessary for our sites to function properly. These cookies secure our forms, support login sessions and remember user dialogue. Because the site does not function without these cookies, opt-out is not available. They are not used for marketing or analytics.</p>
+                        </div>
 
-                                <div class="row">
-                                    <div class="description col-8 col-md-10">
-                                        <h5>Analytical Cookies</h5>
-                                        <p>These cookies collect anonymous data on how visitors use our site and how our pages perform. We use this information to make the best site possible for our users.</p>
-                                    </div>
-                                    <div class="col-4 col-md-2">
-                                        <div class="q-consent-wrapper">
-                                            <?php echo self::option([
-                                                'field'     => 'analytics',
-                                                'value'     => self::$cookie['analytics'],
-                                                'disabled'  => false
-                                            ]); ?>
-                                        </div>
-                                    </div>
-                                </div>
+                        <div class="col-sm-2 col-12">
+                            <div class="q-consent-wrapper">
+                                <?php echo self::option([
+                                    'field'     => 'functional',
+                                    'value'     => 1, // no opt-out ##
+                                    'disabled'  => true
+                                ]); ?>
                             </div>
                         </div>
-                    </div> 
-            <div class="row d-block">
-                <div class="col-6 col-md-4 cta float-right">
-                    <div class="d-inline-block float-right">
-                        <a href="<?php echo \get_permalink(); ?>#/modal/consent/tab/settings/" class="modal-trigger" data-tab-trigger="settings">
-                            <button 
-                            class="btn accept q-consent-set btn-primary"
-                            data-q-consent-marketing="<?php echo self::$cookie['marketing']; ?>" 
-                            data-q-consent-analytics="<?php echo self::$cookie['analytics']; ?>"
-                            disabled
-                            >
-                            SAVE
-                            </button>
-                        </a>
-                    </div>
-                    <div class="d-inline-block float-right">
-                        <button type="button" class="btn reset q-consent-reset">
-                            RESET
-                        </button>
                     </div>
                 </div>
+
+                <div class="setting">
+                    <div class="row">
+                        <div class="col-sm-3 col-12">
+                            <h5>Marketing Cookies</h5>
+                        </div>
+
+                        <div class="col-sm-7 col-12">
+                            <p>These cookies are used to enhance the relevance of our advertising on social media and to tailor messages relevant to your interests.</p>
+                        </div>
+
+                        <div class="col-sm-2 col-12">
+                            <div class="q-consent-wrapper">
+                                <?php echo self::option([
+                                    'field'     => 'marketing',
+                                    'value'     => self::$cookie['marketing'],
+                                    'disabled'  => false
+                                ]); ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="setting">
+                    <div class="row">
+                        <div class="col-sm-3 col-12">
+                            <h5>Analytical Cookies</h5>
+                        </div>
+
+                        <div class="col-sm-7 col-12">
+                            <p>These cookies collect anonymous data on how visitors use our site and how our pages perform. We use this information to make the best site possible for our users.</p>
+                        </div>
+
+                        <div class="col-sm-2 col-12">
+                            <div class="q-consent-wrapper">
+                                <?php echo self::option([
+                                    'field'     => 'analytics',
+                                    'value'     => self::$cookie['analytics'],
+                                    'disabled'  => false
+                                ]); ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="text-right">
+                <button type="button" class="btn btn-dark reset q-consent-reset">RESET</button>
+                <a
+                    href="<?php echo \get_permalink(); ?>#/modal/consent/tab/settings/"
+                    data-tab-trigger="settings"
+                    class="btn btn-success modal-trigger accept q-consent-set"
+                    data-q-consent-marketing="<?php echo self::$cookie['marketing']; ?>"
+                    data-q-consent-analytics="<?php echo self::$cookie['analytics']; ?>"
+                    disabled>SAVE</a>
             </div>
         </div>
 

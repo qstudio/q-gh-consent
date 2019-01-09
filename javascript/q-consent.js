@@ -7,13 +7,15 @@
 if ( typeof jQuery !== 'undefined' ) {
 
     (function ($) {
-
-    	$( window ).on( "load", function(){
-
-    	$tabs = $('.q-tab-trigger');
-    	//$tabs.removeClass('active');
-    	$('q-tab-current').addClass('active');
-    	});//First modal page load
+        // $( window ).on( "load", function(){
+         //    $('.q-tab-trigger').removeClass('active');
+		// 	$('.q-tab-current').addClass('active');
+        // });
+        //
+        // $(document).on('click', '.q-tab-trigger', function() {
+         //    $('.q-tab-trigger').removeClass('active');
+         //    $('.q-tab-current').addClass('active');
+		// });
 
 		// setting options @viktor to improve UI and UX ##
 		$( document.body).on( "click", ".q-consent-option > div", function(e){
