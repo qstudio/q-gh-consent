@@ -45,7 +45,7 @@ class geotarget extends plugin {
         // $region = getenv( 'HTTP_GEOIP_REGION' );
 
         // fake ##
-        // $country = 'LK';
+        // $country = 'ES';
 
         // log ##
         helper::log( $country );
