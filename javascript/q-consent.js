@@ -17,48 +17,29 @@ if ( typeof jQuery !== 'undefined' ) {
          //    $('.q-tab-current').addClass('active');
 		// });
 
-		// setting options @viktor to improve UI and UX ##
-		$( document.body).on( "click", ".q-consent-option > div", function(e){
-
-			//e.preventDefault();
-			var t = this;
-
-			// reject disabled option ##
-			if( $(t).hasClass('disabled') ) {
-
-				q_snackbar({
+        $( document.body).on( "click", ".q-consent-option .slider", function(e){
+            // reject disabled option ##
+            if ($(this).prev().is(':disabled')) {
+                q_snackbar({
 					content:    q_consent.disabled, // msg ##
 					timeout:    5000, // never timeout ##
 					style: 		'error'
 				});
 
 				return false;
-
 			}
+        });
 
-			var $field = $(t).parent('div').data('q-consent-field'); // get field ##
-			var $value = $(t).data('q-consent-value'); // get value ##
+		$( document.body).on( "change", ".q-consent-option input", function(e){
+			var t = this;
 
-			// console.log( 'Clicked on option: '+$field+' with value: '+$value );
-
-			// swap class ##
-			if ( $value == '1' ) {
-
-				// console.log( 'Click on..' );
-				$(t).addClass('on').prev('div').removeClass('off');
-
-			} else {
-
-				// console.log( 'Click off..' );
-				$(t).addClass('off').next('div').removeClass('on');
-
-			}
-
+			var $field = $(t).closest('.q-consent-option').data('q-consent-field'); // get field ##
+			var $value = $(t).is(':checked') ? $(t).val() : 0; // get value ##
 			// update tracking values ##
-			$btn = $('button.q-consent-set');
-			$btn.prop( 'disabled', false );
-			$btn.data( 'q-consent-'+$field, $value );
-			$btn.attr( 'data-q-consent-'+$field, $value ) 
+            $btn = $(t).closest('.q-consent-modal').find('.q-consent-set');
+			// $btn.attr( 'disabled', false );
+            $btn.data( 'q-consent-'+$field, $value );
+			$btn.attr( 'data-q-consent-'+$field, $value );
 
 			// $('[data-q-consent-="'+$field+'"]').val( $value );
 			// $( '.q-consent-set' ).data( 'q-consent-marketing', $value );
@@ -79,7 +60,7 @@ if ( typeof jQuery !== 'undefined' ) {
 
 			e.preventDefault();
 			var t = this;
-			
+
 			// collect data for process ##
 			var $marketing = $(t).data('q-consent-marketing'); // get marketing ##
 			var $analytics = $(t).data('q-consent-analytics'); // get analytics ##
@@ -89,7 +70,7 @@ if ( typeof jQuery !== 'undefined' ) {
 
 			// log ##
             // console.log( "Saving Consent settings..." );
-			
+
 			// clear progress ##
 			if ( typeof NProgress !== 'undefined' ) { NProgress.done(); }
 
@@ -146,7 +127,7 @@ if ( typeof jQuery !== 'undefined' ) {
 			e.preventDefault();
 
             // console.log( "Resetting Consent settings..." );
-			
+
 			// clear progress ##
 			if ( typeof NProgress !== 'undefined' ) { NProgress.done(); }
 
@@ -194,4 +175,4 @@ if ( typeof jQuery !== 'undefined' ) {
 
     })(jQuery);
 
-} 
+}

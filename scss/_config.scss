@@ -50,3 +50,11 @@ a.btn:hover {
     border-color: $c-green;
   }
 }
+
+input:checked + .slider {
+  background-color: $c-green;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px $c-green;
+}

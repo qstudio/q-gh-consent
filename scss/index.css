@@ -37,6 +37,10 @@ body .featherlight .featherlight-content {
   .q-consent .btn.btn-success {
     background-color: #7cb138;
     border-color: #7cb138; }
+.q-consent input:checked + .slider {
+  background-color: #7cb138; }
+.q-consent input:focus + .slider {
+  box-shadow: 0 0 1px #7cb138; }
 .q-consent .q-consent-bar {
   background-color: #00a9e0;
   color: white;
@@ -77,9 +81,9 @@ body .featherlight .featherlight-content {
       color: #7cb138;
       margin: 0 15px;
       padding: 20px 0; }
-      .q-consent .q-consent-modal .nav-tabs .nav-link:not(.active) {
+      .q-consent .q-consent-modal .nav-tabs .nav-link:not(.q-tab-current) {
         border-color: transparent !important; }
-      .q-consent .q-consent-modal .nav-tabs .nav-link.active {
+      .q-consent .q-consent-modal .nav-tabs .nav-link.q-tab-current {
         border-left: none;
         border-bottom: 2px solid #7cb138;
         color: #363637; }
