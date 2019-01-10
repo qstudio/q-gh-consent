@@ -74,14 +74,8 @@ class template extends plugin {
         // enqueue the script ##
         \wp_enqueue_script( 'q-consent-js' );
 
-        // @todo - add styles ##
         wp_register_style( 'q-consent-css', Q_CONSENT_URL.'scss/index.css', '', plugin::$version );
         wp_enqueue_style( 'q-consent-css' );
-
-        //TESTING ONLY! #HACK @todo - Benny, is this hack required, please explain ? ##
-//        \wp_enqueue_style('bs_hack', Q_CONSENT_URL.'deletes/rootstrap.css', array(), '4.0', false );
-        #\wp_enqueue_style( 'bootstrap-css', 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css' );
-
     }
 
 

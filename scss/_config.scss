@@ -1,8 +1,18 @@
 @import "variables";
 
 // @TODO remove
-.row:first-child {
-  margin-left: -15px;
+body {
+  max-width: unset !important;
+}
+
+.q-bsg {
+  .row {
+    width: auto !important;
+
+    &:first-child {
+      margin-left: -15px;
+    }
+  }
 }
 
 h1, h2, h3, h4, h5, h6, strong {

@@ -6,11 +6,3 @@
   @import "bar";
   @import "modal";
 }
-
-// @TODO remove
-body {
-  max-width: unset !important;
-  .row {
-    width: auto !important;
-  }
-}
