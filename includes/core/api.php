@@ -112,7 +112,7 @@ By phone: 312-944-2544</p>
                 $body = json_decode( $response['body'] ) ;
 
                 // helper::log( 'wp_remote_get said: ' );
-                helper::log( $body->data->content );
+                // helper::log( $body->data->content );
 
                 // check we have the content we need and filter it accordingly ##
                 $string = $body->data->content ? \wpautop( $body->data->content ) : $default ;
