@@ -1,5 +1,5 @@
 // @TODO make it local
-body .featherlight .featherlight-content {
+body .featherlight.modal-consent .featherlight-content {
   border-radius: 4px;
   padding: 0;
 
@@ -11,4 +11,8 @@ body .featherlight .featherlight-content {
     right: 15px;
     top: 15px;
   }
+}
+
+@media (max-width: 600px) {
+
 }

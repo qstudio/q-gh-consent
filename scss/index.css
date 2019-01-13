@@ -1,9 +1,9 @@
-body .featherlight .featherlight-content {
+body .featherlight.modal-consent .featherlight-content {
   border-radius: 4px;
   padding: 0; }
-  body .featherlight .featherlight-content p {
+  body .featherlight.modal-consent .featherlight-content p {
     padding: 0; }
-  body .featherlight .featherlight-content .featherlight-close-icon {
+  body .featherlight.modal-consent .featherlight-content .featherlight-close-icon {
     right: 15px;
     top: 15px; }
 
