@@ -45,7 +45,7 @@ class geotarget extends plugin {
         // $region = getenv( 'HTTP_GEOIP_REGION' );
 
         // fake ##
-        // $country = 'LK';
+        // $country = 'ES';
 
         // log ##
         helper::log( $country );
@@ -144,6 +144,27 @@ class geotarget extends plugin {
      */
     public static function is_eu()
     {
+
+        // localhost override
+        if ( helper::is_localhost() ) {
+
+            helper::log( 'Localhost geotarget override' );
+
+            return true;
+
+        }
+
+        // passed override
+        if ( 
+            isset( $_GET['geotarget'] )
+            && 'EU' == $_GET['geotarget']
+        ) {
+
+            helper::log( '$_GET geotarget override' );
+
+            return true;
+
+        }
 
         // we need to check if we have a continent, and if it == 'EU' ##
         return 
