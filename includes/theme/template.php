@@ -29,10 +29,10 @@ class template extends plugin {
     {
 
         // check if the feature has been activated in the admin ##
-        if ( 
-            ! \get_option( plugin::$slug )['consent'] 
+        if (
+        ! \get_option( plugin::$slug )['consent']
         ) {
-            
+
             // log ##
             helper::log( 'Consent UI not active' );
 
@@ -64,24 +64,18 @@ class template extends plugin {
 
         // Now we can localize the script with our data.
         $translation_array = array(
-                'ajax_nonce'    => \wp_create_nonce( 'q_consent' )
-            ,   'ajax_url'      => \get_home_url( '', 'wp-admin/admin-ajax.php' )
-            ,   'saved'         => __( "Saved!", 'q-consent' )
-            ,   'disabled'      => __( "Functional Cookies cannot be disabled", 'q-consent' )
+            'ajax_nonce'    => \wp_create_nonce( 'q_consent' )
+        ,   'ajax_url'      => \get_home_url( '', 'wp-admin/admin-ajax.php' )
+        ,   'saved'         => __( "Saved!", 'q-consent' )
+        ,   'disabled'      => __( "Functional Cookies cannot be disabled", 'q-consent' )
         );
         \wp_localize_script( 'q-consent-js', 'q_consent', $translation_array );
 
         // enqueue the script ##
         \wp_enqueue_script( 'q-consent-js' );
 
-        // @todo - add styles ##
-         wp_register_style( 'q-consent-css', Q_CONSENT_URL.'scss/index.css', '', plugin::$version );
-         wp_enqueue_style( 'q-consent-css' );
-
-        //TESTING ONLY! #HACK @todo - Benny, is this hack required, please explain ? ##
-//        \wp_enqueue_style('bs_hack', Q_CONSENT_URL.'deletes/rootstrap.css', array(), '4.0', false );
-        #\wp_enqueue_style( 'bootstrap-css', 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css' );
-
+        wp_register_style( 'q-consent-css', Q_CONSENT_URL.'scss/index.css', '', plugin::$version );
+        wp_enqueue_style( 'q-consent-css' );
     }
 
 
@@ -94,16 +88,11 @@ class template extends plugin {
      */
     public static function render()
     {
-
-        // @todo - Viktor - this is basic css to make the prototype work, this needs to be improved and moved into external asset css file ##
-        self::css();
-
         // render consent bar ##
         self::bar();
 
         // add modal content ##
         self::modal();
-
     }
 
 
@@ -121,7 +110,7 @@ class template extends plugin {
         }
 
         // check if the user is in the EU contient, for GDPR compliance
-        if ( 
+        if (
             ! helper::is_localhost()
             && ! geotarget::is_eu() ) {
 
@@ -131,32 +120,32 @@ class template extends plugin {
 
         }
 
-?>
-<div class="q-bsg q-consent">
-    <div class="q-consent-bar">
-        <div class="container-fluid">
-            <div class="row align-items-center">
-                <div class="col-xl-9 col-lg-8 col-md-7 col-12 content">
-                    This website uses cookies for basic functionality, analytics, and marketing. Visit our <a
-                        href="<?php echo \get_permalink(); ?>#/modal/consent/tab/privacy/"
-                        class="modal-trigger"
-                        data-tab-trigger="privacy">Privacy Policy</a> page to find out more.
-                </div>
+        ?>
+        <div class="q-bsg q-consent">
+            <div class="q-consent-bar">
+                <div class="container-fluid">
+                    <div class="row align-items-center">
+                        <div class="col-xl-9 col-lg-8 col-md-7 col-12 content">
+                            This website uses cookies for basic functionality, analytics, and marketing. Visit our <a
+                                    href="<?php echo \get_permalink(); ?>#/modal/consent/tab/privacy/"
+                                    class="modal-trigger"
+                                    data-tab-trigger="privacy">Privacy Policy</a> page to find out more.
+                        </div>
 
-                <div class="col-xl-3 col-lg-4 col-md-5 col-12 cta">
-                    <a class="btn btn-border" href="<?php echo \get_permalink(); ?>#/modal/consent/tab/settings/" class="modal-trigger" data-tab-trigger="settings">
-                        SETTINGS
-                    </a>
+                        <div class="col-xl-3 col-lg-4 col-md-5 col-12 cta">
+                            <a class="btn btn-border" href="<?php echo \get_permalink(); ?>#/modal/consent/tab/settings/" class="modal-trigger" data-tab-trigger="settings">
+                                SETTINGS
+                            </a>
 
-                    <button type="button" class="btn btn-light accept q-consent-set" data-q-consent-marketing="1" data-q-consent-analytics="1">
-                        ACCEPT
-                    </button>
+                            <button type="button" class="btn btn-light accept q-consent-set" data-q-consent-marketing="1" data-q-consent-analytics="1">
+                                ACCEPT
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
-<?php
+        <?php
 
     }
 
@@ -165,48 +154,48 @@ class template extends plugin {
     public static function modal()
     {
 
-?>
+        ?>
         <div class="q-tab hidden modal-data" data-modal-key="consent">
 
             <div class="q-bsg q-consent">
                 <div class="q-consent-modal">
                     <ul class="q-tab-triggers nav nav-tabs" role="tablist">
-                        <li class="nav-item"><a href="<?php echo \get_permalink(); ?>#/modal/consent/tab/settings" class="q-tab-trigger nav-link active" data-tab-trigger="settings">Settings</a></li>
+                        <li class="nav-item"><a href="<?php echo \get_permalink(); ?>#/modal/consent/tab/settings" class="q-tab-trigger nav-link" data-tab-trigger="settings">Settings</a></li>
                         <li class="nav-item"><a href="<?php echo \get_permalink(); ?>#/modal/consent/tab/privacy" class="q-tab-trigger nav-link" data-tab-trigger="privacy">Privacy</a></li>
 
                     </ul>
 
                     <div class="tab-targets">
-    <?php
+                        <?php
 
-                    // load up settings tab ##
-                    self::settings();
+                        // load up settings tab ##
+                        self::settings();
 
-                    // load up privacy tab ##
-                    self::privacy();
+                        // load up privacy tab ##
+                        self::privacy();
 
-    ?>
+                        ?>
                     </div>
                 </div>
             </div>
 
         </div>
-<?php
+        <?php
 
     }
 
 
 
     /**
-     * Render Consent Settings in Modal 
-     * 
+     * Render Consent Settings in Modal
+     *
      * @todo    tie into core method to save cookie
      * @since   0.1.0
      */
     public static function settings()
     {
 
-?>
+        ?>
         <div class="q-tab-target" data-tab-target="settings">
             <h3>Cookie Consent Settings</h3>
             <p>Greenheart uses cookies to let you interact with our services, and for marketing and advertising purposes. Some of these cookies are strictly necessary for our sites to function and by using this site you agree that you have read and understand our use of cookies.</p>
@@ -284,17 +273,17 @@ class template extends plugin {
             <div class="text-right">
                 <button type="button" class="btn btn-dark reset q-consent-reset">RESET</button>
                 <a
-                    href="<?php echo \get_permalink(); ?>#/modal/consent/tab/settings/"
-                    data-tab-trigger="settings"
-                    class="btn btn-success modal-trigger accept q-consent-set"
-                    data-q-consent-marketing="<?php echo self::$cookie['marketing']; ?>"
-                    data-q-consent-analytics="<?php echo self::$cookie['analytics']; ?>"
-                    disabled>SAVE</a>
+                        href="<?php echo \get_permalink(); ?>#/modal/consent/tab/settings/"
+                        data-tab-trigger="settings"
+                        class="btn btn-success modal-trigger accept q-consent-set"
+                        data-q-consent-marketing="<?php echo self::$cookie['marketing']; ?>"
+                        data-q-consent-analytics="<?php echo self::$cookie['analytics']; ?>"
+                >SAVE</a>
             </div>
         </div>
 
-            
-<?php
+
+        <?php
 
     }
 
@@ -304,18 +293,18 @@ class template extends plugin {
      * Render Privacy Policy content
      * Tries to get privacy Policy via API on greenheart.org
      * Adds a link to open the settings
-     * 
+     *
      * @todo    make sure privacy policy exists on greenheatrorg
      * @since   0.1.0
      */
     public static function privacy()
     {
 
-?>
+        ?>
         <div class="q-tab-target" data-tab-target="privacy">
             <?php echo api::privacy(); ?>
         </div>
-<?php
+        <?php
 
     }
 
@@ -334,94 +323,15 @@ class template extends plugin {
             return false;
 
         }
+        ?>
 
-        // array map of options ##
-        $array = [
-            'off'   => [
-                'value'     => '0',
-                'disabled'  => $args['disabled'] ? 'disabled' : '',
-                'class'    => ( '0' == $args['value'] ) ? 'off' : null
-            ],
-            'on'    => [
-                'value'     => '1',
-                'disabled'  => $args['disabled'] ? 'disabled' : '',
-                'class'    => ( '1' == $args['value'] ) ? 'on' : null
-            ]
-        ];
-
-?>
-        
-        <div 
-            class="q-consent-option"
-            data-q-consent-field="<?php echo $args["field"]; ?>"
-        >
-<?php
-
-            // loop out the same element twice, giving different classes ##
-            foreach( $array as $key ) {
-
-?>
-            <div 
-                class="q-switch-box box_1 <?php echo $key['class']; ?> <?php echo $key['disabled']; ?>" 
-                data-q-consent-value="<?php echo $key['value']; ?>">
-                    <label>off/on</label>
-                    <input type="checkbox" class="switch_1" checked>
-            </div>
-<?php
-
-            // loop ##
-            }
-
-?>
+        <div class="q-consent-option" data-q-consent-field="<?php echo $args["field"]; ?>">
+            <label class="switch">
+                <input type="checkbox" value="1" <?php echo $args['disabled'] ? 'disabled' : '' ?> <?php echo $args['value'] == '1' ? 'checked' : '' ?>>
+                <span class="slider round"></span>
+            </label>
         </div>
-<?php
+        <?php
 
     }
-
-
-    /**
-     * @Viktor to move to asset / front-end framework 
-     * 
-     */
-    public static function css()
-    {
-
-?>
-        <style>
-
-/* generic */
-.q-hidden { display: none; }
-
-/* tabs */
-.q-tab {  }
-
-/* tab triggers */
-.tab-trigger { display: inline; }
-.tab-trigger.active { font-weight: bold; }
-
-/* tab targets */
-.tab-target { display: none; }
-.tab-target.active { display: block; }
-
-/* options */
-.q-consent-option > .disabled { cursor: not-allowed; }
-
-.q-hidden { display: none; }
-
-/* tabs */
-
-/* tab triggers */
-.tab-trigger { display: inline; }
-.tab-trigger.active { font-weight: bold; }
-
-/* tab targets */
-.tab-target { display: none; }
-.tab-target.active { display: block; }
-        </style>
-<?php
-
-    }
-
-
-
 }

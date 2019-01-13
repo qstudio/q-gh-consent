@@ -23,11 +23,11 @@
       margin: 0 15px;
       padding: 20px 0;
 
-      &:not(.active) {
+      &:not(.q-tab-current) {
         border-color: transparent !important;
       }
 
-      &.active {
+      &.q-tab-current {
         border-left: none;
         border-bottom: 2px solid $c-green;
         color: $c-text;

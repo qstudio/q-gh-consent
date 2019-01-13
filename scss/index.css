@@ -7,8 +7,12 @@ body .featherlight .featherlight-content {
     right: 15px;
     top: 15px; }
 
-.q-consent .row:first-child {
-  margin-left: -15px; }
+.q-consent body {
+  max-width: unset !important; }
+.q-consent .q-bsg .row {
+  width: auto !important; }
+  .q-consent .q-bsg .row:first-child {
+    margin-left: -15px; }
 .q-consent h1, .q-consent h2, .q-consent h3, .q-consent h4, .q-consent h5, .q-consent h6, .q-consent strong {
   color: #363637; }
 .q-consent h3 {
@@ -37,6 +41,10 @@ body .featherlight .featherlight-content {
   .q-consent .btn.btn-success {
     background-color: #7cb138;
     border-color: #7cb138; }
+.q-consent input:checked + .slider {
+  background-color: #7cb138; }
+.q-consent input:focus + .slider {
+  box-shadow: 0 0 1px #7cb138; }
 .q-consent .q-consent-bar {
   background-color: #00a9e0;
   color: white;
@@ -77,9 +85,9 @@ body .featherlight .featherlight-content {
       color: #7cb138;
       margin: 0 15px;
       padding: 20px 0; }
-      .q-consent .q-consent-modal .nav-tabs .nav-link:not(.active) {
+      .q-consent .q-consent-modal .nav-tabs .nav-link:not(.q-tab-current) {
         border-color: transparent !important; }
-      .q-consent .q-consent-modal .nav-tabs .nav-link.active {
+      .q-consent .q-consent-modal .nav-tabs .nav-link.q-tab-current {
         border-left: none;
         border-bottom: 2px solid #7cb138;
         color: #363637; }
@@ -97,10 +105,5 @@ body .featherlight .featherlight-content {
       padding: 0 5px; }
     .q-consent .q-consent-modal .btn {
       width: 47%; } }
-
-body {
-  max-width: unset !important; }
-  body .row {
-    width: auto !important; }
 
 /*# sourceMappingURL=index.css.map */
