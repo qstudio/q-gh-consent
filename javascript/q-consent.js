@@ -131,6 +131,7 @@ if ( typeof jQuery !== 'undefined' ) {
 			// clear progress ##
 			if ( typeof NProgress !== 'undefined' ) { NProgress.done(); }
 
+			var self = $(this);
 			$.ajax({
 				url: q_consent.ajax_url,
 				type: 'POST',
@@ -147,6 +148,7 @@ if ( typeof jQuery !== 'undefined' ) {
 				success: function (response) {
 
 					if ( response ) {
+					    self.closest('.q-consent-modal').find('.settings input[type=checkbox]').attr('checked', 'checked');
 
 						q_snackbar({
 							content:    response.message, // msg ##
