@@ -95,7 +95,7 @@ class geotarget extends plugin {
             // || ! isset( $country['continent'] )
         ){
 
-            helper::log( 'No country code passed or corrupt.' );
+            // helper::log( 'No country code passed or corrupt.' );
 
             return false;
 
@@ -107,7 +107,7 @@ class geotarget extends plugin {
             || ! geoip_country_list()
         ) {
 
-            helper::log( 'geoip_country_list function missing or returned empty results' );
+            // helper::log( 'geoip_country_list function missing or returned empty results' );
 
             return false;
             
@@ -122,13 +122,13 @@ class geotarget extends plugin {
             || ! isset( $countries[$country]['continent'] )
         ){
 
-            helper::log( 'No match in country list for: '.$country );
+            // helper::log( 'No match in country list for: '.$country );
 
             return false;
 
         }
 
-        helper::log( 'Contient: '.$countries[$country]['continent'] );
+        // helper::log( 'Contient: '.$countries[$country]['continent'] );
 
         // kick it back ##
         return $countries[$country]['continent'];
