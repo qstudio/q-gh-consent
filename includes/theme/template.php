@@ -34,7 +34,7 @@ class template extends plugin {
         ) {
 
             // log ##
-            helper::log( 'Consent UI not active' );
+            // helper::log( 'Consent UI not active' );
 
             // kick out ##
             return false;
@@ -103,7 +103,7 @@ class template extends plugin {
         // check if the user has already given active consent - if not, we continue to push them to take an action ##
         if ( cookie::consent() ) {
 
-            helper::log( 'Consent already given, so do not display bar' );
+            // helper::log( 'Consent already given, so do not display bar' );
 
             return false;
 
@@ -112,22 +112,22 @@ class template extends plugin {
         // check if the user is in the EU contient, for GDPR compliance
         if ( ! geotarget::is_eu() ) {
 
-            helper::log( 'User is outside the EU, so we do not need to show the bar' );
+            // helper::log( 'User is outside the EU, so we do not need to show the bar' );
 
             return false;
 
         }
 
-        ?>
+?>
         <div class="q-bsg q-consent">
             <div class="q-consent-bar">
                 <div class="container-fluid">
                     <div class="row align-items-center">
                         <div class="col-xl-9 col-lg-8 col-md-7 col-12 content">
                             This website uses cookies for basic functionality, analytics, and marketing. Visit our <a
-                                    href="<?php echo \get_permalink(); ?>#/modal/consent/tab/privacy/"
-                                    class="modal-trigger"
-                                    data-tab-trigger="privacy">Privacy Policy</a> page to find out more.
+                            href="<?php echo \get_permalink(); ?>#/modal/consent/tab/privacy/"
+                            class="modal-trigger"
+                            data-tab-trigger="privacy">Privacy Policy</a> page to find out more.
                         </div>
 
                         <div class="col-xl-3 col-lg-4 col-md-5 col-12 cta">
@@ -143,7 +143,7 @@ class template extends plugin {
                 </div>
             </div>
         </div>
-        <?php
+<?php
 
     }
 
@@ -152,7 +152,7 @@ class template extends plugin {
     public static function modal()
     {
 
-        ?>
+?>
         <div class="q-tab hidden modal-data" data-modal-key="consent">
 
             <div class="q-bsg q-consent">
@@ -177,7 +177,7 @@ class template extends plugin {
                 </div>
             </div>
 
-        </div>
+</div>
         <?php
 
     }
@@ -193,7 +193,7 @@ class template extends plugin {
     public static function settings()
     {
 
-        ?>
+?>
         <div class="q-tab-target" data-tab-target="settings">
             <h3>Cookie Consent Settings</h3>
             <p>Greenheart uses cookies to let you interact with our services, and for marketing and advertising purposes. Some of these cookies are strictly necessary for our sites to function and by using this site you agree that you have read and understand our use of cookies.</p>
@@ -281,7 +281,7 @@ class template extends plugin {
         </div>
 
 
-        <?php
+<?php
 
     }
 
@@ -298,11 +298,11 @@ class template extends plugin {
     public static function privacy()
     {
 
-        ?>
+?>
         <div class="q-tab-target" data-tab-target="privacy">
             <?php echo api::privacy(); ?>
         </div>
-        <?php
+<?php
 
     }
 
@@ -321,15 +321,15 @@ class template extends plugin {
             return false;
 
         }
-        ?>
 
+?>
         <div class="q-consent-option" data-q-consent-field="<?php echo $args["field"]; ?>">
             <label class="switch">
                 <input type="checkbox" value="1" <?php echo $args['disabled'] ? 'disabled' : '' ?> <?php echo $args['value'] == '1' ? 'checked' : '' ?>>
                 <span class="slider round"></span>
             </label>
         </div>
-        <?php
+<?php
 
     }
 }

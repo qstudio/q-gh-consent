@@ -48,7 +48,7 @@ class geotarget extends plugin {
         // $country = 'ES';
 
         // log ##
-        helper::log( $country );
+        // helper::log( $country );
 
         // log ##
         // helper::log( 'FAKE: '. $country );
@@ -171,7 +171,6 @@ class geotarget extends plugin {
         (
             isset( self::$geotarget['continent'] )
             && self::$geotarget['continent']
-
             && 'EU' == self::$geotarget['continent']
         ) ?
         true : 
