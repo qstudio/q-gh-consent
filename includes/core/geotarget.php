@@ -57,6 +57,7 @@ class geotarget extends plugin {
         if (
             ! $country
             || false === $country
+            && ! helper::is_localhost()
         ) {
 
             helper::log( 'HTTP_GEOIP_COUNTRY_CODE empty' );
