@@ -269,7 +269,7 @@ class template extends plugin {
                 <a
                         href="<?php echo \get_permalink(); ?>#/modal/consent/tab/settings/"
                         data-tab-trigger="settings"
-                        class="btn btn-success modal-trigger accept q-consent-set"
+                        class="featherlight-close btn btn-success modal-trigger accept q-consent-set"
                         data-q-consent-marketing="<?php echo self::$cookie['marketing']; ?>"
                         data-q-consent-analytics="<?php echo self::$cookie['analytics']; ?>"
                 >SAVE</a>
