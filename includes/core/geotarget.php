@@ -48,7 +48,7 @@ class geotarget extends plugin {
         // $country = 'ES';
 
         // log ##
-        helper::log( $country );
+        // helper::log( $country );
 
         // log ##
         // helper::log( 'FAKE: '. $country );
@@ -57,6 +57,7 @@ class geotarget extends plugin {
         if (
             ! $country
             || false === $country
+            && ! helper::is_localhost()
         ) {
 
             helper::log( 'HTTP_GEOIP_COUNTRY_CODE empty' );
@@ -95,7 +96,7 @@ class geotarget extends plugin {
             // || ! isset( $country['continent'] )
         ){
 
-            helper::log( 'No country code passed or corrupt.' );
+            // helper::log( 'No country code passed or corrupt.' );
 
             return false;
 
@@ -107,7 +108,7 @@ class geotarget extends plugin {
             || ! geoip_country_list()
         ) {
 
-            helper::log( 'geoip_country_list function missing or returned empty results' );
+            // helper::log( 'geoip_country_list function missing or returned empty results' );
 
             return false;
             
@@ -122,13 +123,13 @@ class geotarget extends plugin {
             || ! isset( $countries[$country]['continent'] )
         ){
 
-            helper::log( 'No match in country list for: '.$country );
+            // helper::log( 'No match in country list for: '.$country );
 
             return false;
 
         }
 
-        helper::log( 'Contient: '.$countries[$country]['continent'] );
+        // helper::log( 'Contient: '.$countries[$country]['continent'] );
 
         // kick it back ##
         return $countries[$country]['continent'];
@@ -171,7 +172,6 @@ class geotarget extends plugin {
         (
             isset( self::$geotarget['continent'] )
             && self::$geotarget['continent']
-
             && 'EU' == self::$geotarget['continent']
         ) ?
         true : 
