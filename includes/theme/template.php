@@ -153,8 +153,7 @@ class template extends plugin {
     {
 
         ?>
-        <div class="q-tab hidden modal-data" data-modal-key="consent">
-
+        <div class="q-tab modal-data" data-modal-key="consent" style="display: none">
             <div class="q-bsg q-consent">
                 <div class="q-consent-modal">
                     <ul class="q-tab-triggers nav nav-tabs" role="tablist">
@@ -176,7 +175,6 @@ class template extends plugin {
                     </div>
                 </div>
             </div>
-
         </div>
         <?php
 
