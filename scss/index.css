@@ -22,7 +22,7 @@ body .featherlight.modal-consent .featherlight-content {
   font-size: 18px;
   font-weight: bold;
   padding-top: 5px; }
-.q-consent a.btn:hover {
+.q-consent a.btn:hover, .q-consent a.btn:focus {
   color: white; }
 .q-consent .btn {
   color: white;
@@ -31,6 +31,8 @@ body .featherlight.modal-consent .featherlight-content {
   padding: 10px 25px; }
   .q-consent .btn.btn-border {
     border-color: white !important; }
+    .q-consent .btn.btn-border:hover {
+      background-color: transparent; }
   .q-consent .btn.btn-light {
     color: #00a9e0;
     background-color: white;
@@ -53,6 +55,7 @@ body .featherlight.modal-consent .featherlight-content {
     font-size: 14px; }
     .q-consent .q-consent-bar .content a {
       color: white;
+      font-size: 14px;
       text-decoration: underline; }
       .q-consent .q-consent-bar .content a:hover {
         color: white; }

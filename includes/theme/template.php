@@ -151,10 +151,8 @@ class template extends plugin {
 
     public static function modal()
     {
-
 ?>
-        <div class="q-tab hidden modal-data" data-modal-key="consent">
-
+        <div class="q-tab modal-data" data-modal-key="consent" style="display: none">
             <div class="q-bsg q-consent">
                 <div class="q-consent-modal">
                     <ul class="q-tab-triggers nav nav-tabs" role="tablist">
@@ -176,10 +174,8 @@ class template extends plugin {
                     </div>
                 </div>
             </div>
-
-</div>
+        </div>
         <?php
-
     }
 
 
@@ -273,7 +269,7 @@ class template extends plugin {
                 <a
                         href="<?php echo \get_permalink(); ?>#/modal/consent/tab/settings/"
                         data-tab-trigger="settings"
-                        class="btn btn-success modal-trigger accept q-consent-set"
+                        class="featherlight-close btn btn-success modal-trigger accept q-consent-set"
                         data-q-consent-marketing="<?php echo self::$cookie['marketing']; ?>"
                         data-q-consent-analytics="<?php echo self::$cookie['analytics']; ?>"
                 >SAVE</a>
