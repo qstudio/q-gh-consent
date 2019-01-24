@@ -41,7 +41,7 @@ class cookie extends plugin {
 
         if ( self::$cookie ) {
 
-            helper::log( 'No need to run this twice..' );
+            // helper::log( 'No need to run this twice..' );
 
             return self::$cookie;
 
@@ -59,7 +59,7 @@ class cookie extends plugin {
 
         }
 
-        helper::log( 'Running set default cookie....' );
+        // helper::log( 'Running set default cookie....' );
 
         // set default ##
         self::set( self::$defaults ); 
@@ -86,7 +86,7 @@ class cookie extends plugin {
         }
 
         // helper::log( 'Cookie check: '.$check );
-        helper::log( self::$cookie );
+        // helper::log( self::$cookie );
 
         // check if cookie set and correct ##
         if (
@@ -96,7 +96,7 @@ class cookie extends plugin {
         ) {
 
             helper::log('error finding requested cookie value: '.$check );
-            helper::log( self::$cookie );
+            // helper::log( self::$cookie );
 
             return false;
 
