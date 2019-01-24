@@ -39,9 +39,11 @@ class geotarget extends plugin {
     public static function get()
     {
 
-        // get ##
         // $city = getenv( 'HTTP_GEOIP_CITY' );
-        $country = getenv('HTTP_GEOIP_COUNTRY_CODE');
+        $country = 
+            getenv('HTTP_GEOIP_COUNTRY_CODE') ?
+            getenv('HTTP_GEOIP_COUNTRY_CODE') :
+            false ;
         // $region = getenv( 'HTTP_GEOIP_REGION' );
 
         // fake ##
@@ -60,7 +62,7 @@ class geotarget extends plugin {
             && ! helper::is_localhost()
         ) {
 
-            helper::log( 'HTTP_GEOIP_COUNTRY_CODE empty' );
+            // helper::log( 'HTTP_GEOIP_COUNTRY_CODE empty' );
 
         }
 
