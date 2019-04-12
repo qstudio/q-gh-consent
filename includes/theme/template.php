@@ -30,22 +30,22 @@ class template extends plugin {
 
         // check if the feature has been activated in the admin ##
         if (
-        ! \get_option( plugin::$slug )['consent']
+            ! \get_option( plugin::$slug )['consent']
         ) {
 
             // log ##
-            // helper::log( 'Consent UI not active' );
+            helper::log( 'Consent UI not active' );
 
             // kick out ##
             return false;
 
         }
 
-        // styles and scripts ##
-        \add_action( 'wp_enqueue_scripts', [ get_class(), 'wp_enqueue_scripts' ], 99 );
-
         // render consent bar markup - after brand bar at 3 ##
         \add_action( 'q_action_body_open', [ get_class(), 'render' ], 4 );
+
+        // styles and scripts ##
+        \add_action( 'wp_enqueue_scripts', [ get_class(), 'wp_enqueue_scripts' ], 99 );
 
     }
 
@@ -64,10 +64,10 @@ class template extends plugin {
 
         // Now we can localize the script with our data.
         $translation_array = array(
-            'ajax_nonce'    => \wp_create_nonce( 'q_consent' )
-        ,   'ajax_url'      => \get_home_url( '', 'wp-admin/admin-ajax.php' )
-        ,   'saved'         => __( "Saved!", 'q-consent' )
-        ,   'disabled'      => __( "Functional Cookies cannot be disabled", 'q-consent' )
+                'ajax_nonce'    => \wp_create_nonce( 'q_consent' )
+            ,   'ajax_url'      => \get_home_url( '', 'wp-admin/admin-ajax.php' )
+            ,   'saved'         => __( "Saved!", 'q-consent' )
+            ,   'disabled'      => __( "Functional Cookies cannot be disabled", 'q-consent' )
         );
         \wp_localize_script( 'q-consent-js', 'q_consent', $translation_array );
 
@@ -76,6 +76,9 @@ class template extends plugin {
 
         wp_register_style( 'q-consent-css', Q_CONSENT_URL.'scss/index.css', '', plugin::$version );
         wp_enqueue_style( 'q-consent-css' );
+
+        return false;
+        
     }
 
 
@@ -88,11 +91,13 @@ class template extends plugin {
      */
     public static function render()
     {
+        
         // render consent bar ##
         self::bar();
 
         // add modal content ##
         self::modal();
+
     }
 
 
@@ -125,9 +130,10 @@ class template extends plugin {
                     <div class="row align-items-center">
                         <div class="col-xl-9 col-lg-8 col-md-7 col-12 content">
                             This website uses cookies for basic functionality, analytics, and marketing. Visit our <a
-                            href="<?php echo \get_permalink(); ?>#/modal/consent/tab/privacy/"
-                            class="modal-trigger"
-                            data-tab-trigger="privacy">Privacy Policy</a> page to find out more.
+                                href="<?php echo \get_permalink(); ?>#/modal/consent/tab/privacy/"
+                                class="modal-trigger"
+                                data-tab-trigger="privacy"
+                            >Privacy Policy</a> page to find out more.
                         </div>
 
                         <div class="col-xl-3 col-lg-4 col-md-5 col-12 cta">
@@ -151,6 +157,7 @@ class template extends plugin {
 
     public static function modal()
     {
+
 ?>
         <div class="q-tab modal-data" data-modal-key="consent" style="display: none">
             <div class="q-bsg q-consent">
@@ -162,7 +169,7 @@ class template extends plugin {
                     </ul>
 
                     <div class="tab-targets">
-                        <?php
+<?php
 
                         // load up settings tab ##
                         self::settings();
@@ -170,12 +177,13 @@ class template extends plugin {
                         // load up privacy tab ##
                         self::privacy();
 
-                        ?>
+?>
                     </div>
                 </div>
             </div>
         </div>
-        <?php
+<?php
+
     }
 
 

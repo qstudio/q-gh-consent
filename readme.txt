@@ -3,7 +3,7 @@ Contributors: qlstudio
 Tags: custom plugin
 Requires at least: 4.9
 Tested up to: 4.9
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 License: GPL
 
 Build a shared consent, privacy and cookie system
