@@ -102,7 +102,7 @@ class geotarget extends plugin {
             // || ! isset( $country['continent'] )
         ){
 
-            helper::log( 'No country code passed or corrupt.' );
+            // helper::log( 'No country code passed or corrupt.' );
 
             return false;
 
