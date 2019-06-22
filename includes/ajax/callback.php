@@ -99,8 +99,8 @@ class callback extends plugin {
     public static function set()
     {
 
-        // helper::log( 'We are setting the Consent...' );
-        // helper::log( $_REQUEST );
+        helper::log( 'We are setting the Consent...' );
+        // helper::log( $_POST );
 
         // try to set cookie ##
         $set_cookie = true;
@@ -161,13 +161,13 @@ class callback extends plugin {
             $array['consent'] = 1;
 
             // check ##
-            // helper::log( $array );
+            helper::log( $array );
 
             // check for stored cookie -if found, update ##
             if ( cookie::set( $array ) ) {
 
                 // log ##
-                // helper::log( 'AJAX saved cookie data' );
+                helper::log( 'AJAX saved cookie data' );
 
                 // positive outcome ##
                 $return = [
@@ -178,7 +178,7 @@ class callback extends plugin {
             } else {
 
                 // log ##
-                // helper::log( 'AJAX failed to save cookie data' );
+                helper::log( 'AJAX failed to save cookie data' );
 
                 // negative outcome ##
                 $return = [

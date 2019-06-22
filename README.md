@@ -3,7 +3,7 @@
 **Tags:** custom plugin  
 **Requires at least:** 4.9  
 **Tested up to:** 4.9
-**Stable tag:** 1.2.1
+**Stable tag:** 1.2.2
 **License:** GPL  
 
 Build a shared consent, privacy and cookie system
@@ -14,9 +14,9 @@ Build a shared consent, privacy and cookie system
 
 ## Changelog 
 
-### 1.2.1
+### 1.2.2
 
-* Version Bump
+* Cookie domain changes
 
 ### 1.2.0
 

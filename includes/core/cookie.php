@@ -41,7 +41,7 @@ class cookie extends plugin {
 
         if ( self::$cookie ) {
 
-            // helper::log( 'No need to run this twice..' );
+            helper::log( 'No need to run this twice..' );
 
             return self::$cookie;
 
@@ -66,6 +66,8 @@ class cookie extends plugin {
 
         // assign defaults to static property - returns an array ##
         self::$cookie = self::$defaults;
+
+        // helper::log( self::$cookie );
 
         // return cookie values ##
         return self::$cookie;      
@@ -245,8 +247,19 @@ class cookie extends plugin {
         // check it out ##
         // helper::log( $string );
 
+        $urlparts = parse_url( \home_url() );
+
+        // $domain = isset( $urlparts['host'] ) ? '.'.$urlparts['host'] : '' ;
+
+        $domain = helper::is_localhost() ? '/' : '.'.$urlparts['host'] ;
+
+        // $domain = '/';
+
+        // check domain ##
+        // helper::log( 'Domain: '.$domain );
+
         // set the cookie ##
-        \setcookie( plugin::$slug, $string, \time() + 62208000, '/' );
+        setcookie( plugin::$slug, $string, time() + 62208000, $domain ); // domain as empty string ##
         
         // set the cookie value in the global scope ##
         $_COOKIE[plugin::$slug] = $string; 
