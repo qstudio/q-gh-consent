@@ -103,7 +103,7 @@ class cookie extends plugin {
         }
 
         // kick it back ##
-        return 1 == self::$cookie[ $check ] ? true : false ;
+        return ( 1 == self::$cookie[ $check ] ) ? true : false ;
 
     }
 
@@ -135,8 +135,8 @@ class cookie extends plugin {
 
                 // helper::log( 'Cookie in string format, unpick...' );
 
-                $explode = explode( '_', $cookie );
-                // helper::log( $explode );
+                $explode = explode( '__', $cookie );
+                // // helper::log( $explode );
 
                 // new array ##
                 $array = [];
@@ -144,7 +144,7 @@ class cookie extends plugin {
                 foreach ( $explode as $row ) {
 
                     // split row into parts ##
-                    $item = explode( '#', $row );
+                    $item = explode( '_', $row );
 
                     $array[$item[0]] = $item[1];
 
@@ -158,7 +158,7 @@ class cookie extends plugin {
             // it should now be an array ##
             if ( ! is_array( $cookie ) ) {
 
-                // helper::log( 'WTF...' );
+                helper::log( 'WTF...' );
 
                 return false;
 
@@ -205,18 +205,20 @@ class cookie extends plugin {
 
         }
 
+        // helper::log( $array );
+
         // we need to convert our named array into something nice to store in the cookie ##
         // consent_1_marketing_0_analytics_1 ##
 
         $string = '';
         foreach( $array as $key => $value ) {
 
-            $string .= $key.'#'.$value.'_';
+            $string .= $key.'_'.$value.'__';
 
         }
 
         // trim last "_" ##
-        $string = trim( $string, '_' );
+        $string = trim( $string, '__' );
 
         // check it out ##
         // helper::log( $string );
