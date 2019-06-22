@@ -99,8 +99,26 @@ class callback extends plugin {
     public static function set()
     {
 
+        helper::log( 'We are setting the Consent...' );
+        // helper::log( $_REQUEST );
+
+        // try to set cookie ##
+        $set_cookie = true;
+
         // check nonce ##
-        \check_ajax_referer( 'q_consent', 'nonce' );
+        if ( ! \check_ajax_referer( 'q_consent', 'nonce', false ) ) {
+
+            helper::log( 'AJAX referer failed...' );
+
+            $return = [
+                'status'    => '400',
+                'message'   => 'Problem saving Consent preferences, please try again.'    
+            ];
+
+            // flag ##
+            $set_cookie = false;
+
+        }
 
         // sanity ##
         if ( 
@@ -112,9 +130,18 @@ class callback extends plugin {
             helper::log( 'Error in data passed to AJAX' );
 
             // return 0 ##
-            $return = 0;
+            $return = [
+                'status'    => '400',
+                'message'   => 'Problem saving Consent preferences, please try again.'    
+            ];
 
-        } else {
+            // flag ##
+            $set_cookie = false;
+
+        }
+
+        // continue ##
+        if ( $set_cookie ) {
 
             // helper::log( $_POST );
 
@@ -141,7 +168,7 @@ class callback extends plugin {
 
                 // positive outcome ##
                 $return = [
-                    'status'    => true,
+                    'status'    => '200',
                     'message'   => 'Consent preferences saved, thank you.'    
                 ];
 
@@ -152,7 +179,7 @@ class callback extends plugin {
 
                 // negative outcome ##
                 $return = [
-                    'status'    => false,
+                    'status'    => '400',
                     'message'   => 'Problem saving Consent preferences, please try again.'    
                 ];
 

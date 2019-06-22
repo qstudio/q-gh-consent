@@ -13,7 +13,7 @@ use q\consent\theme\template as template;
 class plugin {
 
 	// Settings ##
-    static $version = '1.0.3';
+    static $version = '1.1.0';
     static $device; // current device handle ( 'desktop || handheld' ) ##
     protected static $debug = true;
     static $slug = 'q-consent';

@@ -219,7 +219,7 @@ class cookie extends plugin {
         $string = trim( $string, '_' );
 
         // check it out ##
-        // helper::log( $string );
+        helper::log( $string );
 
         // set the cookie ##
         \setcookie( plugin::$slug, $string, \time() + 62208000, '/' );
@@ -228,8 +228,8 @@ class cookie extends plugin {
         $_COOKIE[plugin::$slug] = $string; 
 
         // what happened ##
-        // helper::log( 'Set cookie::' );
-        // helper::log( $array );
+        helper::log( 'Set cookie::' );
+        helper::log( $array );
 
         // kick back feedback ##
         return true ;
