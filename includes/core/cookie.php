@@ -158,7 +158,7 @@ class cookie extends plugin {
                 // helper::log( 'Cookie in string format, unpick...' );
 
                 $explode = explode( '__', $cookie );
-                helper::log( $explode );
+                // helper::log( $explode );
 
                 // new array ##
                 $array = [];
