@@ -39,9 +39,10 @@ class cookie extends plugin {
     public static function init()
     {
 
+        // check for class property ##
         if ( self::$cookie ) {
 
-            helper::log( 'No need to run this twice..' );
+            // helper::log( 'No need to run this twice..' );
 
             return self::$cookie;
 
@@ -50,6 +51,8 @@ class cookie extends plugin {
         // check for cookie, bulk if found ##
         $cookie = self::get();
         if ( $cookie ) {
+
+            // helper::log( 'Cookie found, setting class property...' );
 
             // assign to property ##
             self::$cookie = $cookie;
@@ -135,7 +138,7 @@ class cookie extends plugin {
                 // || \is_serialized( $cookie )
             ) {
 
-                // as cookie format has changed, we need to check for old format and drop cookie.. or convert to new format ##
+                // as cookie format has changed, we need to check for old format and convert to new format ##
                 if ( strpos( $cookie, '#' ) ) {
 
                     // helper::log( $cookie );
@@ -143,10 +146,10 @@ class cookie extends plugin {
                     // old format ##
                     // helper::log( 'Cookie data stored in old format' );
 
-                    // string replace "#" to "__" ##
+                    // string replace "_" to "__" ##
                     $cookie = str_replace( '_', '__', $cookie ) ;
 
-                    // string replace "#" to "__" ##
+                    // string replace "#" to "_" ##
                     $cookie = str_replace( '#', '_', $cookie ) ;
 
                     // test ##
@@ -283,8 +286,8 @@ class cookie extends plugin {
     public static function consent()
     {
 
-        helper::log( 'Checking if consent has been given..' );
-        helper::log( self::$cookie ) ;
+        // helper::log( 'Checking if consent has been given..' );
+        // helper::log( self::$cookie ) ;
 
         // check for active consent ##
         if ( 
@@ -295,14 +298,14 @@ class cookie extends plugin {
             || ! self::$cookie['consent'] 
         ) {
 
-            helper::log( 'We cannot 100% confirm consent given, so show the bar again..' );
+            // helper::log( 'We cannot 100% confirm consent given, so show the bar again..' );
 
             // if there is any error with the data, we presume no consent has been given ##
             return false;
 
         }
 
-        helper::log('The user has actively given their consent.. no need to show the bar..');
+        // helper::log('The user has actively given their consent.. no need to show the bar..');
 
         return true;
 
