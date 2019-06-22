@@ -64,7 +64,7 @@ class template extends plugin {
 
         // Now we can localize the script with our data.
         $translation_array = array(
-                'ajax_nonce'    => \wp_create_nonce( 'q_consent' )
+                'ajax_nonce'    => \wp_create_nonce( 'ajax_consent' )
             ,   'ajax_url'      => \get_home_url( '', 'wp-admin/admin-ajax.php' )
             ,   'saved'         => __( "Saved!", 'q-consent' )
             ,   'disabled'      => __( "Functional Cookies cannot be disabled", 'q-consent' )

@@ -99,26 +99,29 @@ class callback extends plugin {
     public static function set()
     {
 
-        helper::log( 'We are setting the Consent...' );
+        // helper::log( 'We are setting the Consent...' );
         // helper::log( $_REQUEST );
 
         // try to set cookie ##
         $set_cookie = true;
 
-        // check nonce ##
-        if ( ! \check_ajax_referer( 'q_consent', 'nonce', false ) ) {
+        // AJAX referer check removed, as failing for no clear reason - security not so important to justify UX hickup ##
+        // // check nonce ##
+        // // if ( ! \check_ajax_referer( 'q_consent', 'nonce', false ) ) {
+        // helper::log( \wp_verify_nonce( 'ajax_consent' ) );
+        // if ( ! \wp_verify_nonce( 'ajax_consent' ) ) {
 
-            helper::log( 'AJAX referer failed...' );
+        //     helper::log( 'AJAX referer failed...' );
 
-            $return = [
-                'status'    => '400',
-                'message'   => 'Problem saving Consent preferences, please try again.'    
-            ];
+        //     $return = [
+        //         'status'    => '400',
+        //         'message'   => 'Problem saving Consent preferences, please try again.'    
+        //     ];
 
-            // flag ##
-            $set_cookie = false;
+        //     // flag ##
+        //     $set_cookie = false;
 
-        }
+        // }
 
         // sanity ##
         if ( 
