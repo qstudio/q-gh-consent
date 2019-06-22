@@ -95,7 +95,7 @@ class cookie extends plugin {
             || ! isset( self::$cookie[ $check ] )
         ) {
 
-            helper::log('error finding requested cookie value: '.$check );
+            helper::log( 'Error finding requested cookie value: '.$check );
             // helper::log( self::$cookie );
 
             return false;
@@ -133,10 +133,32 @@ class cookie extends plugin {
                 // || \is_serialized( $cookie )
             ) {
 
+                // as cookie format has changed, we need to check for old format and drop cookie.. or convert to new format ##
+                if ( strpos( $cookie, '#' ) ) {
+
+                    // helper::log( $cookie );
+
+                    // old format ##
+                    // helper::log( 'Cookie data stored in old format' );
+
+                    // string replace "#" to "__" ##
+                    $cookie = str_replace( '_', '__', $cookie ) ;
+
+                    // string replace "#" to "__" ##
+                    $cookie = str_replace( '#', '_', $cookie ) ;
+
+                    // test ##
+                    // helper::log( $cookie );
+
+                    // reasign cookie ##
+                    $_COOKIE[plugin::$slug] = $cookie;
+
+                }
+
                 // helper::log( 'Cookie in string format, unpick...' );
 
                 $explode = explode( '__', $cookie );
-                // // helper::log( $explode );
+                helper::log( $explode );
 
                 // new array ##
                 $array = [];
@@ -249,7 +271,8 @@ class cookie extends plugin {
     public static function consent()
     {
 
-        // helper::log( 'Checking is consent given..' );
+        helper::log( 'Checking if consent has been given..' );
+        helper::log( self::$cookie ) ;
 
         // check for active consent ##
         if ( 
@@ -260,14 +283,14 @@ class cookie extends plugin {
             || ! self::$cookie['consent'] 
         ) {
 
-            // helper::log( 'We cannot 100% confirm consent given, so show the bar again..' );
+            helper::log( 'We cannot 100% confirm consent given, so show the bar again..' );
 
             // if there is any error with the data, we presume no consent has been given ##
             return false;
 
         }
 
-        // helper::log('The user has actively given their consent.. no need to show the bar..');
+        helper::log('The user has actively given their consent.. no need to show the bar..');
 
         return true;
 
