@@ -65,11 +65,11 @@ if ( typeof jQuery !== 'undefined' ) {
 			var $marketing = $(t).data('q-consent-marketing'); // get marketing ##
 			var $analytics = $(t).data('q-consent-analytics'); // get analytics ##
 
-			console.log( 'Marketing: '+$marketing );
-			console.log( 'Analytics: '+$analytics );
+			// console.log( 'Marketing: '+$marketing );
+			// console.log( 'Analytics: '+$analytics );
 
 			// log ##
-            console.log( "Saving Consent settings..." );
+            // console.log( "Saving Consent settings..." );
 
 			// clear progress ##
 			if ( typeof NProgress !== 'undefined' ) { NProgress.done(); }
@@ -91,7 +91,7 @@ if ( typeof jQuery !== 'undefined' ) {
 				},
 				success: function ( response ) {
 
-					console.dir( response );
+					// console.dir( response );
 
 					if ( '200' == response.status ) {
 
