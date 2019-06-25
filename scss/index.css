@@ -30,7 +30,8 @@ body .featherlight.modal-consent .featherlight-content {
   font-weight: bold;
   padding: 10px 25px; }
   .q-consent .btn.btn-border {
-    border-color: white !important; }
+    border-color: white !important;
+    background-color: #00a9e0; }
     .q-consent .btn.btn-border:hover {
       background-color: transparent; }
   .q-consent .btn.btn-light {

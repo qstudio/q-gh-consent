@@ -42,6 +42,7 @@ a.btn:hover, a.btn:focus {
 
   &.btn-border {
     border-color: white !important;
+    background-color: $c-blue;
 
     &:hover {
       background-color: transparent;
