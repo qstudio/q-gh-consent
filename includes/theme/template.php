@@ -9,6 +9,9 @@ use q\consent\core\api as api;
 use q\consent\core\geotarget as geotarget;
 use q\consent\core\cookie as cookie;
 
+// Q ##
+use q\core\options as options;
+
 /**
  * Template level UI changes
  *
@@ -28,19 +31,6 @@ class template extends plugin {
     public static function run()
     {
 
-        // check if the feature has been activated in the admin ##
-        if (
-            ! \get_option( plugin::$slug )['consent']
-        ) {
-
-            // log ##
-            helper::log( 'Consent UI not active' );
-
-            // kick out ##
-            return false;
-
-        }
-
         // render consent bar markup - after brand bar at 3 ##
         \add_action( 'q_action_body_open', [ get_class(), 'render' ], 4 );
 
@@ -48,6 +38,38 @@ class template extends plugin {
         \add_action( 'wp_enqueue_scripts', [ get_class(), 'wp_enqueue_scripts' ], 99 );
 
     }
+
+
+
+    public static function is_active()
+    {
+
+        // helper::log( 'Checking if test suite is active' );
+        // helper::log( options::get('plugin') );
+        // return true;
+
+        if (
+            options::get( 'plugin' )
+            && ! empty( options::get( 'plugin' ) )
+            && is_object( options::get( 'plugin' ) )
+            && isset( options::get( 'plugin' )->consent )
+            && 1 == options::get( 'plugin' )->consent
+        ) {
+
+            // helper::log( 'Consent UI active' );
+
+            // seems good ##
+            return true;
+        
+        }
+
+        // helper::log( 'Consent UI not active' );
+
+        // inactive ##
+        return false;    
+
+    }
+
 
 
     /**
@@ -58,6 +80,16 @@ class template extends plugin {
      */
     public static function wp_enqueue_scripts()
     {
+
+        // check if the feature has been activated in the admin ##
+        if (
+            ! self::is_active()
+        ) {
+
+            // kick out ##
+            return false;
+
+        }
 
         // Register the script ##
         \wp_register_script( 'q-consent-js', Q_CONSENT_URL.'javascript/q-consent.js', array( 'jquery' ), plugin::$version, true );
@@ -92,6 +124,16 @@ class template extends plugin {
     public static function render()
     {
         
+        // check if the feature has been activated in the admin ##
+        if (
+            ! self::is_active()
+        ) {
+
+            // kick out ##
+            return false;
+
+        }
+
         // render consent bar ##
         self::bar();
 

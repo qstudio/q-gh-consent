@@ -49,7 +49,7 @@ $autoload = array(
     ,   'core/helper'
     ,   'core/api'
     ,   'core/cookie'
-    ,   'admin/menu'
+    // ,   'admin/menu'
     ,   'theme/template'
     ,   'ajax/callback'
 );
