@@ -2,8 +2,8 @@
 **Contributors:** qlstudio  
 **Tags:** custom plugin  
 **Requires at least:** 4.9  
-**Tested up to:** 4.9
-**Stable tag:** 1.2.5
+**Tested up to:** 5.0
+**Stable tag:** 1.3.0
 **License:** GPL  
 
 Build a shared consent, privacy and cookie system
@@ -13,6 +13,11 @@ Build a shared consent, privacy and cookie system
 Build a shared consent, privacy and cookie system
 
 ## Changelog 
+
+### 1.3.0
+
+* Moved front-end render controls to Q Settings
+* Renamed Q Consent
 
 ### 1.2.5
 

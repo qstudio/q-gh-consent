@@ -2,7 +2,6 @@
 
 /**
  * Build a shared consent, privacy and cookie system
- * https://docs.google.com/document/d/1GJ4BEg0jEbc4BAsj1spYAV0_GGU_41as_vQyv4RtIxw/edit?ts=5bd218cf
  *
  * @package   q_consent
  * @author    Q Studio <social@qstudio.us>
@@ -11,10 +10,10 @@
  * @copyright 2016 Q Studio
  *
  * @wordpress-plugin
- * Plugin Name:     Consent
+ * Plugin Name:     Q Consent
  * Plugin URI:      http://qstudio.us/
  * Description:     Build a shared consent, privacy and cookie system
- * Version:         1.2.5
+ * Version:         1.3.0
  * Author:          Q Studio
  * Author URI:      http://qstudio.us
  * License:         GPL2
