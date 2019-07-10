@@ -44,7 +44,7 @@ class template extends plugin {
     public static function is_active()
     {
 
-        // helper::log( 'Checking if test suite is active' );
+        // helper::log( 'Checking if Consent is active' );
         // helper::log( options::get('plugin') );
         // return true;
 
