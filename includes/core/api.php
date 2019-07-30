@@ -5,6 +5,9 @@ namespace q\consent\core;
 use q\consent\core\helper as helper;
 use q\consent\theme\template as template;
 
+// piggyback Q helper ##
+use q\core\helper as q_helper;
+
 /**
  * Class API
  * @package q\consent
@@ -78,7 +81,7 @@ By phone: 312-944-2544</p>
 
             // use local when local ##
             $url =
-                helper::is_localhost() ?
+                q_helper::is_localhost() ?
                 'https://ghorg.qlocal.com/api/v2/page/get/privacy' :
                 'https://greenheart.org/api/v2/page/get/privacy' ;
 

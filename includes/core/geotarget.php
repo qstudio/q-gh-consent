@@ -5,6 +5,9 @@ namespace q\consent\core;
 use q\consent\core\helper as helper;
 use q\consent\theme\template as template;
 
+// piggyback Q helper ##
+use q\core\helper as q_helper;
+
 /**
  * Class API
  * @package q\consent
@@ -62,7 +65,7 @@ class geotarget extends plugin {
         if (
             ! $country
             || false === $country
-            && ! helper::is_localhost()
+            && ! q_helper::is_localhost()
         ) {
 
             // helper::log( 'HTTP_GEOIP_COUNTRY_CODE empty' );
@@ -164,7 +167,7 @@ class geotarget extends plugin {
     {
 
         // localhost override
-        if ( helper::is_localhost() ) {
+        if ( q_helper::is_localhost() ) {
 
             // helper::log( 'Localhost geotarget override' );
 

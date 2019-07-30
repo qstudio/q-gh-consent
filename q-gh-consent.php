@@ -13,7 +13,7 @@
  * Plugin Name:     Q Consent
  * Plugin URI:      http://qstudio.us/
  * Description:     Build a shared consent, privacy and cookie system
- * Version:         1.3.0
+ * Version:         1.3.5
  * Author:          Q Studio
  * Author URI:      http://qstudio.us
  * License:         GPL2

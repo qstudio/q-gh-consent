@@ -92,7 +92,7 @@ class template extends plugin {
         }
 
         // Register the script ##
-        \wp_register_script( 'q-consent-js', Q_CONSENT_URL.'javascript/q-consent.js', array( 'jquery' ), plugin::$version, true );
+        \wp_register_script( 'q-consent-js', Q_CONSENT_URL.'javascript/q-consent.js', array( 'jquery' ), plugin::version, true );
 
         // Now we can localize the script with our data.
         $translation_array = array(
@@ -106,7 +106,7 @@ class template extends plugin {
         // enqueue the script ##
         \wp_enqueue_script( 'q-consent-js' );
 
-        wp_register_style( 'q-consent-css', Q_CONSENT_URL.'scss/index.css', '', plugin::$version );
+        wp_register_style( 'q-consent-css', Q_CONSENT_URL.'scss/index.css', '', plugin::version );
         wp_enqueue_style( 'q-consent-css' );
 
         return false;

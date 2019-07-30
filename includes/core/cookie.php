@@ -5,6 +5,9 @@ namespace q\consent\core;
 use q\consent\core\helper as helper;
 use q\consent\theme\template as template;
 
+// piggyback Q helper ##
+use q\core\helper as q_helper;
+
 /**
  * Class API
  * @package q\consent
@@ -254,7 +257,7 @@ class cookie extends plugin {
 
         // $domain = isset( $urlparts['host'] ) ? '.'.$urlparts['host'] : '' ;
 
-        // $domain = helper::is_localhost() ? '/' : '.'.$urlparts['host'] ;
+        // $domain = q_helper::is_localhost() ? '/' : '.'.$urlparts['host'] ;
         $domain = '/';
 
         // check domain ##
