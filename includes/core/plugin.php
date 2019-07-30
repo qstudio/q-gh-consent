@@ -15,7 +15,7 @@ class plugin {
 	// Settings ##
     const version = '1.3.5';
     // static $device; // current device handle ( 'desktop || handheld' ) ##
-    public static $debug = false;
+    public static $debug = true;
     static $slug = 'q-consent';
 
     // will contain the geotarget variables - https://wpengine.com/support/developers-guide-geotarget/ ## 
@@ -44,7 +44,74 @@ class plugin {
     public function __construct()
     {
 
+        // check for dependencies, required for UI components - admin will still run ##
+        if ( ! self::has_dependencies() ) {
+
+            return false;
+
+        }
+
+        // check debug settings ##
+        add_action( 'plugins_loaded', array( get_class(), 'debug' ), 11 );
+
     }
+
+
+
+    /**
+     * Check for required classes to build UI features
+     * 
+     * @return      Boolean 
+     * @since       0.1.0
+     */
+    public static function has_dependencies()
+    {
+
+        // check for what's needed ##
+        if (
+            ! class_exists( 'Q' )
+        ) {
+
+            helper::log( 'Q classes are required, install required plugin.' );
+
+            return false;
+
+        }
+
+        // helper::log( 'Q classes loaded....' );
+
+        // ok ##
+        return true;
+
+    }
+
+
+    /**
+     * We want the debugging to be controlled in global and local steps
+     * If Q debug is true -- all debugging is true
+     * else follow settings in Q, or this plugin $debug variable
+     */
+    public static function debug()
+    {
+
+        // define debug ##
+        self::$debug = 
+            ( 
+                class_exists( 'Q' )
+                && true === \Q::$debug
+            ) ?
+            true :
+            self::$debug ;
+
+        // test ##
+        // helper::log( 'Q exists: '.json_encode( class_exists( 'Q' ) ) );
+        // helper::log( 'Q debug: '.json_encode( \Q::$debug ) );
+        // helper::log( json_encode( self::$debug ) );
+
+        return self::$debug;
+
+    }
+
 
 
     /**

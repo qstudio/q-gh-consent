@@ -3,7 +3,7 @@
 **Tags:** custom plugin  
 **Requires at least:** 4.9  
 **Tested up to:** 5.0
-**Stable tag:** 1.3.0
+**Stable tag:** 1.3.5
 **License:** GPL  
 
 Build a shared consent, privacy and cookie system
@@ -13,6 +13,11 @@ Build a shared consent, privacy and cookie system
 Build a shared consent, privacy and cookie system
 
 ## Changelog 
+
+### 1.3.5
+
+* Added Q dependency check
+* Added Q debugging logic
 
 ### 1.3.0
 
