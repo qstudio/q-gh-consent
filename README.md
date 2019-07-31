@@ -3,16 +3,16 @@
 **Tags:** custom plugin  
 **Requires at least:** 4.9  
 **Tested up to:** 5.0
-**Stable tag:** 1.3.5
+**Stable tag:** 1.3.6
 **License:** GPL  
 
 Build a shared consent, privacy and cookie system
 
-## Description 
-
-Build a shared consent, privacy and cookie system
-
 ## Changelog 
+
+### 1.3.6
+
+* Issue in helper class
 
 ### 1.3.5
 

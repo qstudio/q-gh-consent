@@ -97,7 +97,7 @@ By phone: 312-944-2544</p>
                 'body'        => null,
                 'compress'    => false,
                 'decompress'  => true,
-                'sslverify'   => helper::is_localhost() ? false : true , // no SSL locally ##
+                'sslverify'   => q_helper::is_localhost() ? false : true , // no SSL locally ##
                 'stream'      => false,
                 'filename'    => null
             );
