@@ -14,6 +14,8 @@
  * GitHub Plugin URI: qstudio/q-gh-consent
  */
 
+use q\consent\core\helper as helper;
+
 defined( 'ABSPATH' ) OR exit;
 
 if ( ! class_exists( 'q_consent' ) ) {
