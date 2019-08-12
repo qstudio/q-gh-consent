@@ -42,7 +42,7 @@ class api extends \q_consent {
     {
 
         // uncomment this to defeat cache ##
-        \delete_site_transient( 'q_consent_privacy' );
+        // // \delete_site_transient( 'q_consent_privacy' );
 
         // check if we have a match in the cache first and return that ##
         if ( false === ( $string = \get_site_transient( 'q_consent_privacy' ) ) ) {
