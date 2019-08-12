@@ -17,6 +17,7 @@ use q\core\options as options;
  *
  * @package   q_consent
  */
+
 // load it up ##
 \q\consent\theme\template::run();
 
