@@ -3,7 +3,7 @@
 // namespace ##
 namespace q\consent\theme;
 
-use q\consent\core\plugin as plugin;
+// use q\consent\core\plugin as plugin;
 use q\consent\core\helper as helper;
 use q\consent\core\api as api;
 use q\consent\core\geotarget as geotarget;
@@ -20,7 +20,7 @@ use q\core\options as options;
 // load it up ##
 \q\consent\theme\template::run();
 
-class template extends plugin {
+class template extends \q_consent {
 
     /**
      * Instatiate Class
@@ -92,7 +92,7 @@ class template extends plugin {
         }
 
         // Register the script ##
-        \wp_register_script( 'q-consent-js', Q_CONSENT_URL.'javascript/q-consent.js', array( 'jquery' ), plugin::version, true );
+        \wp_register_script( 'q-consent-js', self::get_plugin_url( 'library/theme/javascript/q-consent.js' ), array( 'jquery' ), self::version, true );
 
         // Now we can localize the script with our data.
         $translation_array = array(
@@ -106,7 +106,7 @@ class template extends plugin {
         // enqueue the script ##
         \wp_enqueue_script( 'q-consent-js' );
 
-        wp_register_style( 'q-consent-css', Q_CONSENT_URL.'scss/index.css', '', plugin::version );
+        wp_register_style( 'q-consent-css', self::get_plugin_url( 'library/theme/scss/index.css' ), '', self::version );
         wp_enqueue_style( 'q-consent-css' );
 
         return false;

@@ -4,7 +4,7 @@
 namespace q\consent\ajax;
 
 use q\consent\core\helper as helper;
-use q\consent\core\plugin as plugin;
+// use q\consent\core\plugin as plugin;
 use q\consent\theme\template as template;
 use q\consent\core\cookie as cookie;
 
@@ -17,7 +17,7 @@ use q\consent\core\cookie as cookie;
 // load it up ##
 \q\consent\ajax\callback::run();
 
-class callback extends plugin {
+class callback extends \q_consent {
 
 	/**
      * Construct
@@ -57,8 +57,8 @@ class callback extends plugin {
             // log ##
             // helper::log( 'Cookie found and emptied.' );
 
-            unset( $_COOKIE[plugin::$slug] );
-            setcookie( plugin::$slug, null, -1, '/' );
+            unset( $_COOKIE[self::$slug] );
+            setcookie( self::$slug, null, -1, '/' );
 
             $return = [
                 'status'    => true,

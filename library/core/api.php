@@ -16,7 +16,7 @@ use q\core\helper as q_helper;
 // load it up ##
 //  \q\consent\core\api::run();
 
-class api extends plugin {
+class api extends \q_consent {
 
     /**
      * Instatiate Class
@@ -42,7 +42,7 @@ class api extends plugin {
     {
 
         // uncomment this to defeat cache ##
-        // \delete_site_transient( 'q_consent_privacy' );
+        \delete_site_transient( 'q_consent_privacy' );
 
         // check if we have a match in the cache first and return that ##
         if ( false === ( $string = \get_site_transient( 'q_consent_privacy' ) ) ) {

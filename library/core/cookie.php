@@ -16,7 +16,7 @@ use q\core\helper as q_helper;
 // load it up ##
 \q\consent\core\cookie::run();
 
-class cookie extends plugin {
+class cookie extends \q_consent {
 
     /**
      * Instatiate Class
@@ -126,13 +126,13 @@ class cookie extends plugin {
     {
 
         if ( 
-            isset( $_COOKIE[plugin::$slug] ) 
-            && $_COOKIE[plugin::$slug] 
-            // && is_array( $_COOKIE[plugin::$slug] )
+            isset( $_COOKIE[self::$slug] ) 
+            && $_COOKIE[self::$slug] 
+            // && is_array( $_COOKIE[self::$slug] )
         ) {
 
             // get ##
-            $cookie = $_COOKIE[plugin::$slug];
+            $cookie = $_COOKIE[self::$slug];
             // helper::log( $cookie );
 
             // cookie values are serialized when stored ##
@@ -159,7 +159,7 @@ class cookie extends plugin {
                     // helper::log( $cookie );
 
                     // reasign cookie ##
-                    $_COOKIE[plugin::$slug] = $cookie;
+                    $_COOKIE[self::$slug] = $cookie;
 
                 }
 
@@ -264,10 +264,10 @@ class cookie extends plugin {
         // helper::log( 'Domain: '.$domain );
 
         // set the cookie ##
-        setcookie( plugin::$slug, $string, time() + 62208000, $domain ); // domain as empty string ##
+        setcookie( self::$slug, $string, time() + 62208000, $domain ); // domain as empty string ##
         
         // set the cookie value in the global scope ##
-        $_COOKIE[plugin::$slug] = $string; 
+        $_COOKIE[self::$slug] = $string; 
 
         // what happened ##
         // helper::log( 'Set cookie::' );

@@ -3,7 +3,7 @@
 // namespace ##
 namespace q\consent\core;
 
-use q\consent\core\plugin as plugin;
+// use q\consent\core\plugin as plugin;
 
 // piggyback Q helper ##
 use q\core\helper as q_helper;
@@ -13,7 +13,7 @@ use q\core\helper as q_helper;
  *
  * @package   q_consent\Core
  */
-class Helper extends Plugin {
+class helper extends \q_consent {
 
 
     /**

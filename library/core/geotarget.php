@@ -16,7 +16,7 @@ use q\core\helper as q_helper;
 // load it up ##
 \q\consent\core\geotarget::run();
 
-class geotarget extends plugin {
+class geotarget extends \q_consent {
 
     /**
      * Instatiate Class
