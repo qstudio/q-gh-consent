@@ -129,9 +129,6 @@ if ( ! class_exists( 'q_consent' ) ) {
 
 
 
-
-
-
         // the form for sites have to be 1-column-layout
         public function register_activation_hook() {
 
@@ -264,7 +261,7 @@ if ( ! class_exists( 'q_consent' ) ) {
             // frontend ##
             require_once self::get_plugin_path( 'library/theme/template.php' );
 
-            // tests ##
+            // tests -- @todo, show response from GEO location ##
             // require_once self::get_plugin_path( 'library/test/controller.php' );
 
         }
